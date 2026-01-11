@@ -1,0 +1,28 @@
+@startuml
+title Diagramme de séquence - Passer une commande
+
+actor Client
+participant "App Mobile / Web" as UI
+participant "API Backend (NestJS)" as API
+participant "Service Commande" as OrderService
+participant "Base de données" as DB
+
+Client -> UI : Sélectionner des plats
+Client -> UI : Valider le panier
+
+UI -> API : POST /orders (plats, quantités, adresse)
+API -> OrderService : createOrder()
+
+OrderService -> DB : Vérifier stock des plats
+DB --> OrderService : Stock OK
+
+OrderService -> DB : Créer Order
+OrderService -> DB : Créer OrderItems
+OrderService -> DB : Décrémenter le stock
+
+OrderService --> API : Commande créée (orderId, status)
+API --> UI : Confirmation de commande
+
+UI --> Client : Afficher confirmation\n+ statut "CREATED"
+
+@enduml

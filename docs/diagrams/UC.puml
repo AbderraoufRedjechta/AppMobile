@@ -1,0 +1,31 @@
+@startuml
+title Diagramme de cas d’utilisation
+
+left to right direction
+
+actor Client
+actor "Cuisinière" as Cook
+
+rectangle Tayebli {
+
+  Client -- (S'inscrire / Se connecter)
+  Client -- (Consulter les plats)
+  Client -- (Filtrer par wilaya)
+  Client -- (Voir le détail d’un plat)
+  Client -- (Passer une commande)
+  Client -- (Suivre le statut de la commande)
+
+  Cook -- (S'inscrire / Se connecter)
+  Cook -- (Créer son profil cuisinière)
+  Cook -- (Soumettre les documents KYC)
+  Cook -- (Publier un plat)
+  Cook -- (Mettre à jour un plat)
+  Cook -- (Consulter les commandes reçues)
+  Cook -- (Accepter / Refuser une commande)
+
+  (Passer une commande) --> (Choisir une adresse) : <<include>>
+  (Passer une commande) --> (Choisir un moyen de paiement) : <<include>>
+
+}
+
+@enduml

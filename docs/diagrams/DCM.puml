@@ -1,0 +1,54 @@
+@startuml
+title DCM
+
+class User {
+  id
+  phoneNumber
+  role
+  isActive
+  createdAt
+}
+
+class Cook {
+  id
+  name
+  description
+  isVerified
+}
+
+class Dish {
+  id
+  name
+  description
+  price
+  quantityAvailable
+  isActive
+}
+
+class Order {
+  id
+  totalPrice
+  status
+  createdAt
+}
+
+class OrderItem {
+  id
+  quantity
+  unitPrice
+}
+
+class Wilaya {
+  id
+  name
+  code
+}
+
+User "1" -- "0..1" Cook
+Cook "1" -- "0..*" Dish
+User "1" -- "0..*" Order
+Order "1" -- "1..*" OrderItem
+OrderItem "*" -- "1" Dish
+Cook "*" -- "1" Wilaya
+
+@enduml

@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: tayebli-postgres
+    environment:
+      POSTGRES_DB: tayebli
+      POSTGRES_USER: tayebli_user
+      POSTGRES_PASSWORD: tayebli_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
