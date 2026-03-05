@@ -1,88 +1,74 @@
-import { Injectable } from '@nestjs/common';
-
-export enum UserRole {
-  CLIENT = 'CLIENT',
-  COOK = 'COOK',
-  COURIER = 'COURIER',
-  ADMIN = 'ADMIN',
-}
-
-export enum UserStatus {
-  PENDING = 'PENDING',
-  APPROVED = 'APPROVED',
-  REJECTED = 'REJECTED',
-}
-
-export interface User {
-  id: number;
-  email: string;
-  password: string;
-  name: string;
-  role: UserRole;
-  status: UserStatus;
-}
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User, UserRole, UserStatus } from './user.entity';
 
 @Injectable()
 export class UsersService {
-  private users: User[] = [
-    {
-      id: 1,
-      email: 'client@tayabli.com',
-      password: 'password',
-      name: 'Client Test',
-      role: UserRole.CLIENT,
-      status: UserStatus.APPROVED,
-    },
-    {
-      id: 2,
-      email: 'cook@tayabli.com',
-      password: 'password',
-      name: 'Cook Test',
-      role: UserRole.COOK,
-      status: UserStatus.APPROVED,
-    },
-    {
-      id: 3,
-      email: 'courier@tayabli.com',
-      password: 'password',
-      name: 'Courier Test',
-      role: UserRole.COURIER,
-      status: UserStatus.APPROVED,
-    },
-    {
-      id: 4,
-      email: 'admin@tayabli.com',
-      password: 'password',
-      name: 'Admin Test',
-      role: UserRole.ADMIN,
-      status: UserStatus.APPROVED,
-    },
-  ];
+  constructor(
+    @InjectRepository(User)
+    private usersRepository: Repository<User>,
+  ) { }
 
-  findOne(email: string): User | undefined {
-    return this.users.find((user) => user.email === email);
+  async findOne(email: string): Promise<User | null> {
+    return this.usersRepository.findOne({ where: { email } });
   }
 
-  create(user: Omit<User, 'id' | 'status'>): User {
-    const newUser: User = {
-      id: this.users.length + 1,
-      ...user,
-      status: user.role === UserRole.CLIENT ? UserStatus.APPROVED : UserStatus.PENDING,
-    };
-    this.users.push(newUser);
-    return newUser;
+  async findByPhone(phone: string): Promise<User | null> {
+    return this.usersRepository.findOne({ where: { phone } });
   }
 
-  findAll(): User[] {
-    return this.users;
-  }
-
-  updateStatus(id: number, status: UserStatus): User | undefined {
-    const user = this.users.find((u) => u.id === id);
-    if (user) {
-      user.status = status;
-      return user;
+  async findById(id: number): Promise<User> {
+    const user = await this.usersRepository.findOne({ where: { id } });
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
     }
-    return undefined;
+    return user;
+  }
+
+  async create(userData: Partial<User>): Promise<User> {
+    const user = this.usersRepository.create({
+      ...userData,
+      status:
+        userData.role === UserRole.CLIENT
+          ? UserStatus.APPROVED
+          : UserStatus.PENDING,
+    });
+    return this.usersRepository.save(user);
+  }
+
+  async findAll(): Promise<User[]> {
+    return this.usersRepository.find();
+  }
+
+  async findCooks(): Promise<User[]> {
+    return this.usersRepository.find({
+      where: {
+        role: UserRole.COOK,
+        status: UserStatus.APPROVED,
+      },
+    });
+  }
+  async findCouriers(): Promise<User[]> {
+    return this.usersRepository.find({
+      where: {
+        role: UserRole.COURIER,
+        status: UserStatus.APPROVED,
+      },
+    });
+  }
+
+  async findPending(): Promise<User[]> {
+    return this.usersRepository.find({
+      where: {
+        status: UserStatus.PENDING,
+      },
+    });
+  }
+
+  async updateStatus(id: number, status: UserStatus): Promise<User> {
+    const user = await this.findById(id);
+    user.status = status;
+    return this.usersRepository.save(user);
   }
 }

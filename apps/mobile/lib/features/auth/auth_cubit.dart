@@ -2,7 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import '../../core/services/mock_auth_service.dart';
+import '../../core/api_client.dart';
+import 'auth_api_service.dart';
 
 enum UserRole { client, cook, courier, admin }
 
@@ -29,10 +30,12 @@ class AuthState extends Equatable {
 }
 
 class AuthCubit extends Cubit<AuthState> {
-  final MockAuthService _authService;
+  final AuthApiService _authService;
+  final ApiClient _apiClient;
 
-  AuthCubit({MockAuthService? authService})
-    : _authService = authService ?? MockAuthService(),
+  AuthCubit({required AuthApiService authService, required ApiClient apiClient})
+    : _authService = authService,
+      _apiClient = apiClient,
       super(const AuthState()) {
     checkSession();
   }
@@ -45,6 +48,7 @@ class AuthCubit extends Cubit<AuthState> {
     if (token != null && userJson != null) {
       try {
         final user = User.fromJson(jsonDecode(userJson));
+        _apiClient.setAuthToken(token);
         emit(AuthState(isAuthenticated: true, user: user, token: token));
       } catch (e) {
         // Corrupt data, clear session
@@ -69,6 +73,8 @@ class AuthCubit extends Cubit<AuthState> {
       );
       final token = data['token'];
 
+      _apiClient.setAuthToken(token);
+
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('auth_token', token);
       await prefs.setString('user_data', jsonEncode(user.toJson()));
@@ -81,6 +87,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> logout() async {
+    _apiClient.clearAuthToken();
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
     emit(const AuthState());

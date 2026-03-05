@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'cart_cubit.dart';
+import '../auth/auth_cubit.dart';
+import '../../core/api_client.dart';
+import 'orders_api_service.dart';
 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({super.key});
@@ -343,33 +346,54 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 
-  void _processOrder() {
-    // Simulate order processing
+  Future<void> _processOrder() async {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
 
-    Future.delayed(const Duration(seconds: 2), () {
+    try {
+      final cart = context.read<CartCubit>().state;
+      final total = cart.total + 300;
+      final items = cart.items;
+
+      if (items.isEmpty) {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Le panier est vide')),
+        );
+        return;
+      }
+
+      final clientId = context.read<AuthCubit>().state.user?['id'] ?? 1;
+      
+      final firstDish = items.first;
+      final cookId = firstDish['cook'] != null ? firstDish['cook']['id'] : 1;
+      final dishId = firstDish['id'] as int;
+      final itemIds = items.map((e) => e['id'] as int).toList();
+
+      final orderApi = OrdersApiService(ApiClient());
+      final createdOrder = await orderApi.createOrder(
+        clientId: clientId,
+        cookId: cookId,
+        dishId: dishId,
+        items: itemIds,
+        total: total,
+      );
+
       if (mounted) {
         Navigator.pop(context); // Dismiss loading
-        final total = context.read<CartCubit>().state.total + 300;
-        final items = context.read<CartCubit>().state.items;
-
-        // Create mock order
-        final mockOrder = {
-          'id':
-              'CMD-${DateTime.now().millisecondsSinceEpoch.toString().substring(8)}',
-          'status': 'PENDING',
-          'createdAt': DateTime.now().toIso8601String(),
-          'total': total,
-          'items': items,
-        };
-
         context.read<CartCubit>().clearCart();
-        context.go('/order-success', extra: mockOrder);
+        context.go('/order-success', extra: createdOrder);
       }
-    });
+    } catch (e) {
+      if (mounted) {
+        Navigator.pop(context); // Dismiss loading
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erreur: $e')),
+        );
+      }
+    }
   }
 }

@@ -1,6 +1,6 @@
-# admin
+# Wajabat Admin Panel
 
-A new Flutter project.
+A Flutter web portal for Wajabat administrators.
 
 ## Getting Started
 

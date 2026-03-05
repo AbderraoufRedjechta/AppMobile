@@ -18,7 +18,7 @@ void main() async {
 
   // Auto-login as admin for development
   try {
-    final token = await authApiService.login('admin@tayabli.com', 'password');
+    final token = await authApiService.login('admin@wajabat.com', 'password');
     apiClient.setAuthToken(token);
     print('✅ Logged in as admin');
   } catch (e) {
@@ -58,7 +58,7 @@ class AdminApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp.router(
-        title: 'Tayabli Admin',
+        title: 'Wajabat Admin',
         debugShowCheckedModeBanner: false,
         theme: adminTheme,
         routerConfig: router,

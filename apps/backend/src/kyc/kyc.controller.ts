@@ -36,16 +36,18 @@ export class KycController {
       },
     ),
   )
-  uploadFile(
+  async uploadFile(
     @UploadedFiles()
     files: {
       cni_front?: Express.Multer.File[];
       cni_back?: Express.Multer.File[];
       kitchen_photo?: Express.Multer.File[];
     },
-    @Body() body: any,
   ) {
-    console.log(files);
+    // Mock user ID from request for now
+    const mockUserId = 1;
+    await this.kycService.updateKycDocuments(mockUserId, files);
+
     return {
       message: 'KYC documents uploaded successfully',
       status: 'SUBMITTED',

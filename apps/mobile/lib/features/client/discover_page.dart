@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import '../../core/theme/gusto_theme.dart';
+import '../../core/theme/wajabat_theme.dart';
 import 'package:go_router/go_router.dart';
 
 class DiscoverPage extends StatelessWidget {
@@ -16,7 +16,7 @@ class DiscoverPage extends StatelessWidget {
     ];
 
     return Scaffold(
-      backgroundColor: GustoTheme.background,
+      backgroundColor: WajabatTheme.background,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(

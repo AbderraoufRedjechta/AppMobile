@@ -2,21 +2,26 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
-import '../../core/theme/gusto_theme.dart';
+import '../../core/theme/wajabat_theme.dart';
 import '../../core/services/mock_data_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../client/favorites_cubit.dart';
+import '../../core/api_client.dart';
+import '../client/dishes_api_service.dart';
 
-class GustoFeed extends StatefulWidget {
-  const GustoFeed({super.key});
+class WajabatFeed extends StatefulWidget {
+  const WajabatFeed({super.key});
 
   @override
-  State<GustoFeed> createState() => _GustoFeedState();
+  State<WajabatFeed> createState() => _WajabatFeedState();
 }
 
-class _GustoFeedState extends State<GustoFeed> {
+class _WajabatFeedState extends State<WajabatFeed> {
   final ScrollController _scrollController = ScrollController();
+  final DishesApiService _dishesApiService = DishesApiService(ApiClient());
+  
   List<Map<String, dynamic>> _cooks = [];
+  List<Map<String, dynamic>> _allDishes = [];
   bool _isLoading = true;
 
   @override
@@ -26,19 +31,30 @@ class _GustoFeedState extends State<GustoFeed> {
   }
 
   Future<void> _loadData() async {
-    await Future.delayed(1.seconds); // Cinematic load
-    if (mounted) {
-      setState(() {
-        _cooks = MockDataService.getCooks();
-        _isLoading = false;
-      });
+    try {
+      final cooks = await _dishesApiService.getCooks();
+      final dishes = await _dishesApiService.getDishes();
+      if (mounted) {
+        setState(() {
+          _cooks = cooks;
+          _allDishes = dishes;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _isLoading = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erreur: $e')),
+        );
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: GustoTheme.background,
+      backgroundColor: WajabatTheme.background,
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [
@@ -54,13 +70,13 @@ class _GustoFeedState extends State<GustoFeed> {
                 children: [
                   Text(
                     'Mrahba, Karim 👋',
-                    style: GustoTheme.textTheme.displayMedium,
+                    style: WajabatTheme.textTheme.displayMedium,
                   ).animate().fadeIn().slideX(),
                   const SizedBox(height: 8),
                   Text(
                     'Qu\'est-ce qu\'on mange aujourd\'hui ?',
-                    style: GustoTheme.textTheme.bodyLarge?.copyWith(
-                      color: GustoTheme.textLight,
+                    style: WajabatTheme.textTheme.bodyLarge?.copyWith(
+                      color: WajabatTheme.textLight,
                     ),
                   ).animate().fadeIn(delay: 200.ms),
                 ],
@@ -166,7 +182,7 @@ class _GustoFeedState extends State<GustoFeed> {
                         fit: BoxFit.contain,
                         errorBuilder: (_, __, ___) => const Icon(
                           Icons.restaurant,
-                          color: GustoTheme.primary,
+                          color: WajabatTheme.primary,
                           size: 30,
                         ),
                       ),
@@ -245,9 +261,9 @@ class _GustoFeedState extends State<GustoFeed> {
   Widget _buildHeroCard(Map<String, dynamic> cook, int index) {
     // Determine the cover image logic
     String coverImage = 'couscous_royal.png';
-    final dishes = MockDataService.getDishesByCook(cook['id'] as int);
+    final dishes = _allDishes.where((d) => d['cook'] != null && d['cook']['id'] == cook['id']).toList();
     if (dishes.isNotEmpty) {
-      coverImage = dishes.first['image'];
+      coverImage = dishes.first['image'] ?? 'couscous_royal.png';
     }
 
     return GestureDetector(
@@ -256,16 +272,16 @@ class _GustoFeedState extends State<GustoFeed> {
             margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             height: 320,
             decoration: BoxDecoration(
-              borderRadius: GustoTheme.radiusXL,
+              borderRadius: WajabatTheme.radiusXL,
               color: Colors.white,
-              boxShadow: GustoTheme.shadowHero,
+              boxShadow: WajabatTheme.shadowHero,
             ),
             child: Stack(
               children: [
                 // 1. Cover Image
                 Positioned.fill(
                   child: ClipRRect(
-                    borderRadius: GustoTheme.radiusXL,
+                    borderRadius: WajabatTheme.radiusXL,
                     child: coverImage.startsWith('http')
                         ? Image.network(coverImage, fit: BoxFit.cover)
                         : Image.asset(
@@ -281,7 +297,7 @@ class _GustoFeedState extends State<GustoFeed> {
                 Positioned.fill(
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: GustoTheme.radiusXL,
+                      borderRadius: WajabatTheme.radiusXL,
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
@@ -342,7 +358,7 @@ class _GustoFeedState extends State<GustoFeed> {
                               shape: BoxShape.circle,
                             ),
                             child: CircleAvatar(
-                              backgroundColor: GustoTheme.background,
+                              backgroundColor: WajabatTheme.background,
                               child: Text(
                                 cook['avatar'] ?? '👩‍🍳',
                                 style: const TextStyle(fontSize: 20),
@@ -353,7 +369,7 @@ class _GustoFeedState extends State<GustoFeed> {
                           Expanded(
                             child: Text(
                               cook['name'] ?? 'Chef',
-                              style: GustoTheme.textTheme.titleLarge?.copyWith(
+                              style: WajabatTheme.textTheme.titleLarge?.copyWith(
                                 color: Colors.white,
                               ),
                             ),
@@ -364,7 +380,7 @@ class _GustoFeedState extends State<GustoFeed> {
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: GustoTheme.primary,
+                              color: WajabatTheme.primary,
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(
@@ -399,7 +415,7 @@ class _GustoFeedState extends State<GustoFeed> {
 
   Widget _buildLoader() {
     return const Center(
-      child: CircularProgressIndicator(color: GustoTheme.primary),
+      child: CircularProgressIndicator(color: WajabatTheme.primary),
     );
   }
 }

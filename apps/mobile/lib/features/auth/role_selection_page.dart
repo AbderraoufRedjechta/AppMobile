@@ -17,7 +17,7 @@ class RoleSelectionPage extends StatelessWidget {
             children: [
               const SizedBox(height: 24),
               Text(
-                'Bienvenue sur Gusto',
+                'Bienvenue sur Wajabat',
                 style: GoogleFonts.outfit(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,

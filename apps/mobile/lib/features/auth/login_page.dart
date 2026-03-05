@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const Text(
-                  'Gusto',
+                  'Wajabat',
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,

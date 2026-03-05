@@ -17,7 +17,7 @@ class _MainWrapperState extends State<MainWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: GustoDesign.background,
+      backgroundColor: WajabatDesign.background,
       body: Stack(
         children: [
           // 1. The Page Content
@@ -37,7 +37,7 @@ class _MainWrapperState extends State<MainWrapper> {
 
   Widget _buildFloatingDock() {
     return ClipRRect(
-      borderRadius: GustoDesign.radiusLarge,
+      borderRadius: WajabatDesign.radiusLarge,
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
         child: Container(
@@ -45,9 +45,9 @@ class _MainWrapperState extends State<MainWrapper> {
           padding: const EdgeInsets.symmetric(horizontal: 8),
           decoration: BoxDecoration(
             color: Colors.white.withOpacity(0.85),
-            borderRadius: GustoDesign.radiusLarge,
+            borderRadius: WajabatDesign.radiusLarge,
             border: Border.all(color: Colors.white.withOpacity(0.2)),
-            boxShadow: GustoDesign.shadowLarge,
+            boxShadow: WajabatDesign.shadowLarge,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -81,7 +81,7 @@ class _MainWrapperState extends State<MainWrapper> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: isSelected
-              ? GustoDesign.primary.withOpacity(0.1)
+              ? WajabatDesign.primary.withOpacity(0.1)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(24),
         ),
@@ -91,7 +91,7 @@ class _MainWrapperState extends State<MainWrapper> {
           children: [
             Icon(
                   icon,
-                  color: isSelected ? GustoDesign.primary : Colors.grey[400],
+                  color: isSelected ? WajabatDesign.primary : Colors.grey[400],
                   size: 26,
                 )
                 .animate(target: isSelected ? 1 : 0)
@@ -103,7 +103,7 @@ class _MainWrapperState extends State<MainWrapper> {
                   width: 4,
                   height: 4,
                   decoration: const BoxDecoration(
-                    color: GustoDesign.primary,
+                    color: WajabatDesign.primary,
                     shape: BoxShape.circle,
                   ),
                 ),

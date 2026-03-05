@@ -23,9 +23,13 @@ let KycController = class KycController {
     constructor(kycService) {
         this.kycService = kycService;
     }
-    uploadFile(files, body) {
-        console.log(files);
-        return { message: 'KYC documents uploaded successfully', status: 'SUBMITTED' };
+    async uploadFile(files) {
+        const mockUserId = 1;
+        await this.kycService.updateKycDocuments(mockUserId, files);
+        return {
+            message: 'KYC documents uploaded successfully',
+            status: 'SUBMITTED',
+        };
     }
 };
 exports.KycController = KycController;
@@ -39,16 +43,18 @@ __decorate([
         storage: (0, multer_1.diskStorage)({
             destination: './uploads',
             filename: (req, file, cb) => {
-                const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
+                const randomName = Array(32)
+                    .fill(null)
+                    .map(() => Math.round(Math.random() * 16).toString(16))
+                    .join('');
                 return cb(null, `${randomName}${(0, path_1.extname)(file.originalname)}`);
             },
         }),
     })),
     __param(0, (0, common_1.UploadedFiles)()),
-    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
 ], KycController.prototype, "uploadFile", null);
 exports.KycController = KycController = __decorate([
     (0, common_1.Controller)('kyc'),

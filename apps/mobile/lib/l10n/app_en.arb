@@ -1,0 +1,9 @@
+{
+  "@@locale": "en",
+  "appTitle": "Wajabat",
+  "welcome": "Welcome to Wajabat",
+  "searchDishes": "Search for dishes...",
+  "cart": "Cart",
+  "orders": "Orders",
+  "profile": "Profile"
+}

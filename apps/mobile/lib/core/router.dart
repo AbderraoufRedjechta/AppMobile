@@ -32,8 +32,8 @@ import '../features/client/order_success_page.dart';
 import '../features/client/promo_codes_page.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
-import '../features/gusto_max/gusto_shell.dart';
-import '../features/gusto_max/gusto_feed.dart';
+import '../features/wajabat_max/wajabat_shell.dart';
+import '../features/wajabat_max/wajabat_feed.dart';
 
 import '../features/client/discover_page.dart';
 import '../features/client/favorites_page.dart';
@@ -62,17 +62,17 @@ final router = GoRouter(
       builder: (context, state) => const OnboardingPage(),
     ),
 
-    // --- GUSTO MAX SHELL ---
+    // --- Wajabat MAX SHELL ---
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
-        return GustoShell(navigationShell: navigationShell);
+        return WajabatShell(navigationShell: navigationShell);
       },
       branches: [
         // 1. HOME
         StatefulShellBranch(
           navigatorKey: _sectionNavigatorKey,
           routes: [
-            GoRoute(path: '/', builder: (context, state) => const GustoFeed()),
+            GoRoute(path: '/', builder: (context, state) => const WajabatFeed()),
           ],
         ),
         // 2. DISCOVER

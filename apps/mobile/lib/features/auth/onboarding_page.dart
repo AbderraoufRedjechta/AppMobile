@@ -16,7 +16,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   final List<Map<String, String>> _pages = [
     {
-      'title': 'Bienvenue sur Gusto',
+      'title': 'Bienvenue sur Wajabat',
       'description':
           'Découvrez les meilleurs plats faits maison autour de vous.',
       'image': 'assets/images/onboarding_1.png', // Placeholder

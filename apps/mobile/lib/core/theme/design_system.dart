@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class GustoDesign {
+class WajabatDesign {
   // --- COLORS (Authentic & Premium) ---
   static const Color primary = Color(0xFFC15B20); // Rust/Clay (Cooked Food)
   static const Color secondary = Color(0xFF3E5224); // Olive Green (Freshness)

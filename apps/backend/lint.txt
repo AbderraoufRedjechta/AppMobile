@@ -1,0 +1,102 @@
+﻿
+> Wajabat-backend@0.0.1 lint
+> eslint "{src,apps,libs,test}/**/*.ts" --fix
+
+
+Z:\wajabat\apps\backend\src\auth\auth.controller.ts
+  26:38  warning  Unsafe argument of type `any` assigned to a parameter of type `Partial<User>`  @typescript-eslint/no-unsafe-argument
+
+Z:\wajabat\apps\backend\src\auth\auth.service.ts
+  55:7   error  Unsafe assignment of an `any` value             @typescript-eslint/no-unsafe-assignment
+  55:22  error  Unsafe member access .email on an `any` value   @typescript-eslint/no-unsafe-member-access
+  56:7   error  Unsafe assignment of an `any` value             @typescript-eslint/no-unsafe-assignment
+  56:17  error  Unsafe member access .id on an `any` value      @typescript-eslint/no-unsafe-member-access
+  57:7   error  Unsafe assignment of an `any` value             @typescript-eslint/no-unsafe-assignment
+  57:18  error  Unsafe member access .role on an `any` value    @typescript-eslint/no-unsafe-member-access
+  58:7   error  Unsafe assignment of an `any` value             @typescript-eslint/no-unsafe-assignment
+  58:20  error  Unsafe member access .status on an `any` value  @typescript-eslint/no-unsafe-member-access
+  63:9   error  Unsafe assignment of an `any` value             @typescript-eslint/no-unsafe-assignment
+  63:18  error  Unsafe member access .id on an `any` value      @typescript-eslint/no-unsafe-member-access
+  64:9   error  Unsafe assignment of an `any` value             @typescript-eslint/no-unsafe-assignment
+  64:21  error  Unsafe member access .email on an `any` value   @typescript-eslint/no-unsafe-member-access
+  65:9   error  Unsafe assignment of an `any` value             @typescript-eslint/no-unsafe-assignment
+  65:20  error  Unsafe member access .name on an `any` value    @typescript-eslint/no-unsafe-member-access
+  66:9   error  Unsafe assignment of an `any` value             @typescript-eslint/no-unsafe-assignment
+  66:20  error  Unsafe member access .role on an `any` value    @typescript-eslint/no-unsafe-member-access
+  67:9   error  Unsafe assignment of an `any` value             @typescript-eslint/no-unsafe-assignment
+  67:22  error  Unsafe member access .status on an `any` value  @typescript-eslint/no-unsafe-member-access
+
+Z:\wajabat\apps\backend\src\auth\jwt.strategy.ts
+  17:14  error  Unsafe assignment of an `any` value               @typescript-eslint/no-unsafe-assignment
+  17:30  error  Unsafe member access .sub on an `any` value       @typescript-eslint/no-unsafe-member-access
+  17:35  error  Unsafe assignment of an `any` value               @typescript-eslint/no-unsafe-assignment
+  17:53  error  Unsafe member access .username on an `any` value  @typescript-eslint/no-unsafe-member-access
+
+Z:\wajabat\apps\backend\src\auth\roles.guard.ts
+  18:11  error  Unsafe assignment of an `any` value           @typescript-eslint/no-unsafe-assignment
+  19:46  error  Unsafe member access .role on an `any` value  @typescript-eslint/no-unsafe-member-access
+
+Z:\wajabat\apps\backend\src\dishes\dishes.controller.ts
+  16:53  warning  Unsafe argument of type `any` assigned to a parameter of type `User`  @typescript-eslint/no-unsafe-argument
+
+Z:\wajabat\apps\backend\src\disputes\disputes.controller.ts
+  14:58  warning  Unsafe argument of type `any` assigned to a parameter of type `User`  @typescript-eslint/no-unsafe-argument
+
+Z:\wajabat\apps\backend\src\finance\finance.service.spec.ts
+  7:7  error  'ordersService' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+Z:\wajabat\apps\backend\src\finance\finance.service.ts
+  10:11  error  Unsafe assignment of an error typed value               @typescript-eslint/no-unsafe-assignment
+  10:29  error  Unsafe call of a(n) `error` type typed value            @typescript-eslint/no-unsafe-call
+  10:52  error  Unsafe member access .status on an `any` value          @typescript-eslint/no-unsafe-member-access
+  12:11  error  Unsafe assignment of an error typed value               @typescript-eslint/no-unsafe-assignment
+  12:25  error  Unsafe call of a(n) `error` type typed value            @typescript-eslint/no-unsafe-call
+  12:41  error  Unsafe member access .reduce on an `error` typed value  @typescript-eslint/no-unsafe-member-access
+  12:60  error  Unsafe return of a value of type `any`                  @typescript-eslint/no-unsafe-return
+  12:68  error  Unsafe member access .total on an `any` value           @typescript-eslint/no-unsafe-member-access
+  14:45  error  Unsafe member access .length on an `error` typed value  @typescript-eslint/no-unsafe-member-access
+  18:7   error  Unsafe assignment of an error typed value               @typescript-eslint/no-unsafe-assignment
+  19:7   error  Unsafe assignment of an error typed value               @typescript-eslint/no-unsafe-assignment
+  19:40  error  Unsafe member access .length on an `error` typed value  @typescript-eslint/no-unsafe-member-access
+  20:7   error  Unsafe assignment of an error typed value               @typescript-eslint/no-unsafe-assignment
+
+Z:\wajabat\apps\backend\src\kyc\kyc.controller.ts
+  46:13  error  'body' is defined but never used  @typescript-eslint/no-unused-vars
+
+Z:\wajabat\apps\backend\src\kyc\kyc.service.ts
+  15:19  error    Unsafe member access .cni_front on an `any` value                              @typescript-eslint/no-unsafe-member-access
+  15:30  error    Unsafe assignment of an `any` value                                            @typescript-eslint/no-unsafe-assignment
+  15:56  error    Unsafe member access .cni_front on an `any` value                              @typescript-eslint/no-unsafe-member-access
+  16:19  error    Unsafe member access .cni_back on an `any` value                               @typescript-eslint/no-unsafe-member-access
+  16:29  error    Unsafe assignment of an `any` value                                            @typescript-eslint/no-unsafe-assignment
+  16:54  error    Unsafe member access .cni_back on an `any` value                               @typescript-eslint/no-unsafe-member-access
+  17:19  error    Unsafe member access .kitchen_photo on an `any` value                          @typescript-eslint/no-unsafe-member-access
+  18:7   error    Unsafe assignment of an `any` value                                            @typescript-eslint/no-unsafe-assignment
+  18:28  error    Unsafe call of a(n) `any` typed value                                          @typescript-eslint/no-unsafe-call
+  18:38  error    Unsafe member access .kitchen_photo on an `any` value                          @typescript-eslint/no-unsafe-member-access
+  18:66  error    Unsafe return of a value of type `any`                                         @typescript-eslint/no-unsafe-return
+  18:71  error    Unsafe member access .filename on an `any` value                               @typescript-eslint/no-unsafe-member-access
+  25:37  warning  Unsafe argument of type `any` assigned to a parameter of type `Partial<User>`  @typescript-eslint/no-unsafe-argument
+
+Z:\wajabat\apps\backend\src\main.ts
+  9:1  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
+
+Z:\wajabat\apps\backend\src\notifications\notifications.controller.ts
+  17:7   warning  Unsafe argument of type `any` assigned to a parameter of type `User`    @typescript-eslint/no-unsafe-argument
+  17:24  error    Unsafe member access .user on an `any` value                            @typescript-eslint/no-unsafe-member-access
+  18:7   warning  Unsafe argument of type `any` assigned to a parameter of type `string`  @typescript-eslint/no-unsafe-argument
+  18:24  error    Unsafe member access .title on an `any` value                           @typescript-eslint/no-unsafe-member-access
+  19:7   warning  Unsafe argument of type `any` assigned to a parameter of type `string`  @typescript-eslint/no-unsafe-argument
+  19:24  error    Unsafe member access .body on an `any` value                            @typescript-eslint/no-unsafe-member-access
+
+Z:\wajabat\apps\backend\src\orders\orders.controller.ts
+  19:7   warning  Unsafe argument of type `any` assigned to a parameter of type `User`         @typescript-eslint/no-unsafe-argument
+  20:7   warning  Unsafe argument of type `any` assigned to a parameter of type `User`         @typescript-eslint/no-unsafe-argument
+  21:7   warning  Unsafe argument of type `any` assigned to a parameter of type `Dish`         @typescript-eslint/no-unsafe-argument
+  46:49  warning  Unsafe argument of type `any` assigned to a parameter of type `OrderStatus`  @typescript-eslint/no-unsafe-argument
+
+Z:\wajabat\apps\backend\src\reviews\reviews.controller.ts
+  15:39  warning  Unsafe argument of type `any` assigned to a parameter of type `Partial<Review>`  @typescript-eslint/no-unsafe-argument
+
+Ô£û 67 problems (54 errors, 13 warnings)
+

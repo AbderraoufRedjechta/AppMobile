@@ -2,18 +2,18 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import '../../core/theme/gusto_theme.dart';
+import '../../core/theme/wajabat_theme.dart';
 
-class GustoShell extends StatefulWidget {
+class WajabatShell extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
 
-  const GustoShell({super.key, required this.navigationShell});
+  const WajabatShell({super.key, required this.navigationShell});
 
   @override
-  State<GustoShell> createState() => _GustoShellState();
+  State<WajabatShell> createState() => _WajabatShellState();
 }
 
-class _GustoShellState extends State<GustoShell> {
+class _WajabatShellState extends State<WajabatShell> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,16 +31,16 @@ class _GustoShellState extends State<GustoShell> {
 
   Widget _buildGlassDock() {
     return ClipRRect(
-      borderRadius: GustoTheme.radiusXL,
+      borderRadius: WajabatTheme.radiusXL,
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
         child: Container(
           height: 76,
           decoration: BoxDecoration(
             color: Colors.white.withOpacity(0.85),
-            borderRadius: GustoTheme.radiusXL,
+            borderRadius: WajabatTheme.radiusXL,
             border: Border.all(color: Colors.white.withOpacity(0.4)),
-            boxShadow: GustoTheme.shadowGlass,
+            boxShadow: WajabatTheme.shadowGlass,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -71,7 +71,7 @@ class _GustoShellState extends State<GustoShell> {
 
   Widget _buildNavItem(int index, IconData activeIcon, IconData inactiveIcon) {
     final isSelected = widget.navigationShell.currentIndex == index;
-    final color = isSelected ? GustoTheme.primary : GustoTheme.textLight;
+    final color = isSelected ? WajabatTheme.primary : WajabatTheme.textLight;
 
     return GestureDetector(
       onTap: () => widget.navigationShell.goBranch(
@@ -98,7 +98,7 @@ class _GustoShellState extends State<GustoShell> {
               width: 4,
               height: 4,
               decoration: const BoxDecoration(
-                color: GustoTheme.primary,
+                color: WajabatTheme.primary,
                 shape: BoxShape.circle,
               ),
             ).animate().scale(duration: 200.ms),

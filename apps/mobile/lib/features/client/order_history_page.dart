@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../core/services/mock_data_service.dart';
+import '../../core/api_client.dart';
+import 'orders_api_service.dart';
 
 class OrderHistoryPage extends StatefulWidget {
   const OrderHistoryPage({super.key});
@@ -10,6 +11,7 @@ class OrderHistoryPage extends StatefulWidget {
 }
 
 class _OrderHistoryPageState extends State<OrderHistoryPage> {
+  final OrdersApiService _ordersApiService = OrdersApiService(ApiClient());
   List<Map<String, dynamic>> _orders = [];
   bool _isLoading = true;
 
@@ -20,13 +22,18 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
   }
 
   Future<void> _fetchOrders() async {
-    // Simulate network delay
-    await Future.delayed(const Duration(milliseconds: 500));
-    if (mounted) {
-      setState(() {
-        _orders = MockDataService.getOrders();
-        _isLoading = false;
-      });
+    try {
+      final orders = await _ordersApiService.getOrders();
+      if (mounted) {
+        setState(() {
+          _orders = orders;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
     }
   }
 
@@ -111,7 +118,9 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                 itemBuilder: (context, index) {
                   final order = _orders[index];
                   final status = order['status'] as String;
-                  final createdAt = DateTime.parse(order['date'] as String);
+                  // Handle mock format or real format for date
+                  final dateStr = order['createdAt'] ?? order['date'] ?? DateTime.now().toIso8601String();
+                  final createdAt = DateTime.parse(dateStr as String);
 
                   return Card(
                     margin: const EdgeInsets.only(bottom: 16),
@@ -203,7 +212,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                 ),
                                 const SizedBox(width: 8),
                                 Text(
-                                  '${(order['items'] as List).length} article(s)',
+                                  '${order['quantity'] ?? 1} article(s)',
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.grey[600],
@@ -223,7 +232,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                   ),
                                 ),
                                 Text(
-                                  '${order['total']} DA',
+                                  '${order['totalAmount'] ?? order['total'] ?? 0} DA',
                                   style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,

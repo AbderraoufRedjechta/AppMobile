@@ -38,8 +38,8 @@ class HelpSupportPage extends StatelessWidget {
           _buildContactTile(
             icon: Icons.email,
             title: 'Email',
-            subtitle: 'support@gusto.dz',
-            onTap: () => _launchUrl('mailto:support@gustofood.com'),
+            subtitle: 'support@Wajabat.dz',
+            onTap: () => _launchUrl('mailto:support@Wajabatfood.com'),
           ),
           _buildContactTile(
             icon: Icons.phone,

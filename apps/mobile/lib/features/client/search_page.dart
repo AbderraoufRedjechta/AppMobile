@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../core/services/mock_data_service.dart';
+import '../../core/api_client.dart';
+import '../client/dishes_api_service.dart';
 
 class SearchPage extends StatefulWidget {
   final Map<String, dynamic>? extra;
@@ -13,6 +14,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage>
     with SingleTickerProviderStateMixin {
+  final DishesApiService _dishesApiService = DishesApiService(ApiClient());
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocus = FocusNode();
   late TabController _tabController;
@@ -64,7 +66,7 @@ class _SearchPageState extends State<SearchPage>
     super.dispose();
   }
 
-  void _performSearch() {
+  Future<void> _performSearch() async {
     final query = _searchController.text;
     if (query.isEmpty) {
       setState(() {
@@ -77,9 +79,24 @@ class _SearchPageState extends State<SearchPage>
 
     setState(() {
       _isSearching = true;
-      _dishResults = MockDataService.searchDishes(query);
-      _cookResults = MockDataService.searchCooks(query);
     });
+
+    try {
+      final dishes = await _dishesApiService.searchDishes(query);
+      final cooks = await _dishesApiService.searchCooks(query);
+      if (mounted) {
+        setState(() {
+          _dishResults = dishes;
+          _cookResults = cooks;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erreur: $e')),
+        );
+      }
+    }
   }
 
   void _showFilterBottomSheet() {

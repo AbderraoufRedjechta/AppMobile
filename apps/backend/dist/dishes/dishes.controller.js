@@ -21,13 +21,16 @@ let DishesController = class DishesController {
     constructor(dishesService) {
         this.dishesService = dishesService;
     }
-    create(createDishDto) {
-        return this.dishesService.create(createDishDto);
+    async create(createDishDto, cookId) {
+        return this.dishesService.create(createDishDto, { id: cookId });
     }
-    findAll() {
+    async findAll() {
         return this.dishesService.findAll();
     }
-    findOne(id) {
+    async findByCook(cookId) {
+        return this.dishesService.findByCook(+cookId);
+    }
+    async findOne(id) {
         return this.dishesService.findOne(+id);
     }
 };
@@ -35,22 +38,30 @@ exports.DishesController = DishesController;
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Body)('cookId')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_dish_dto_1.CreateDishDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [create_dish_dto_1.CreateDishDto, Number]),
+    __metadata("design:returntype", Promise)
 ], DishesController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], DishesController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)('cook/:cookId'),
+    __param(0, (0, common_1.Param)('cookId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], DishesController.prototype, "findByCook", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], DishesController.prototype, "findOne", null);
 exports.DishesController = DishesController = __decorate([
     (0, common_1.Controller)('dishes'),

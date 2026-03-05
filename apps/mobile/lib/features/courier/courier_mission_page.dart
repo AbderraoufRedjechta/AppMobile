@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../core/services/mock_data_service.dart';
+import '../../core/api_client.dart';
+import '../client/orders_api_service.dart';
 
 class CourierMissionPage extends StatefulWidget {
   const CourierMissionPage({super.key});
@@ -9,6 +10,7 @@ class CourierMissionPage extends StatefulWidget {
 }
 
 class _CourierMissionPageState extends State<CourierMissionPage> {
+  final OrdersApiService _ordersApiService = OrdersApiService(ApiClient());
   List<dynamic> _orders = [];
   bool _isLoading = true;
 
@@ -19,28 +21,34 @@ class _CourierMissionPageState extends State<CourierMissionPage> {
   }
 
   Future<void> _fetchOrders() async {
-    // Simulate network delay
-    await Future.delayed(const Duration(seconds: 1));
-    if (mounted) {
-      setState(() {
-        // Use mock data from service
-        _orders = MockDataService.getOrders();
-        _isLoading = false;
-      });
+    try {
+      final orders = await _ordersApiService.getOrders();
+      if (mounted) {
+        setState(() {
+          _orders = orders;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
   Future<void> _updateStatus(String orderId, String status) async {
-    // Simulate network delay
-    await Future.delayed(const Duration(seconds: 1));
-
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Statut mis à jour: $status (Simulation)')),
-      );
-      // In a real app, we would refresh the data here
-      // For now, just trigger a rebuild/fetch
-      _fetchOrders();
+    try {
+      await _ordersApiService.updateOrderStatus(orderId, status);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Statut mis à jour: $status')),
+        );
+        _fetchOrders();
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erreur: $e')),
+        );
+      }
     }
   }
 
@@ -62,12 +70,12 @@ class _CourierMissionPageState extends State<CourierMissionPage> {
                   color: isDelivered ? Colors.green[50] : Colors.white,
                   child: ListTile(
                     title: Text('Commande #${order['id']}'),
-                    subtitle: Text('Total: ${order['total']} DA - $status'),
+                    subtitle: Text('Total: ${order['totalAmount'] ?? order['total'] ?? 0} DA - $status'),
                     trailing: isDelivered
                         ? const Icon(Icons.check_circle, color: Colors.green)
                         : ElevatedButton(
                             onPressed: () =>
-                                _updateStatus(order['id'], 'DELIVERED'),
+                                _updateStatus(order['id'].toString(), 'DELIVERED'),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.orange,
                               foregroundColor: Colors.white,

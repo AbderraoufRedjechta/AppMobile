@@ -172,7 +172,7 @@ class UserManagementPage extends StatelessWidget {
   Color _getRoleColor(UserRole role) {
     switch (role) {
       case UserRole.cook:
-        return const Color(0xFFE65100);
+        return const Color(0xFF933D41);
       case UserRole.courier:
         return Colors.blue;
       case UserRole.admin:

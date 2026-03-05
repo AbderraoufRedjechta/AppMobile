@@ -88,7 +88,7 @@ class MockAuthService {
       case UserRole.admin:
         return {
           'id': 'admin_1',
-          'name': 'Admin Gusto',
+          'name': 'Admin Wajabat',
           'phone': phone,
           'role': 'admin',
           'token': 'mock_token_admin',

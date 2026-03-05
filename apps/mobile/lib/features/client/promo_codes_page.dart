@@ -25,7 +25,7 @@ class PromoCodesPage extends StatelessWidget {
           const SizedBox(height: 16),
           _buildPromoCard(
             context,
-            code: 'GUSTO20',
+            code: 'Wajabat20',
             description: '20% de réduction sur les plats traditionnels',
             expiry: 'Valable jusqu\'au 15 Nov 2023',
             color: Colors.green,

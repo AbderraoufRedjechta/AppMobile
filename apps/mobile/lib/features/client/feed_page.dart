@@ -82,7 +82,7 @@ class _FeedPageState extends State<FeedPage> {
                     height: 32,
                     errorBuilder: (_, __, ___) => const Icon(
                       Icons.restaurant_menu,
-                      color: GustoDesign.primary,
+                      color: WajabatDesign.primary,
                     ),
                   ),
                 ],
@@ -93,7 +93,7 @@ class _FeedPageState extends State<FeedPage> {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: GustoDesign.background,
+                    color: WajabatDesign.background,
                     image: DecorationImage(
                       image: const NetworkImage(
                         'https://via.placeholder.com/800x400/E0E0E0/FFFFFF?text=Alger+Centre+Map',
@@ -140,7 +140,7 @@ class _FeedPageState extends State<FeedPage> {
               children: [
                 Text(
                   'Mrahba, Karim ! 👋',
-                  style: GustoDesign.textTheme.displayMedium,
+                  style: WajabatDesign.textTheme.displayMedium,
                 ).animate().fadeIn().slideX(),
                 const SizedBox(height: 8),
                 Container(
@@ -149,8 +149,8 @@ class _FeedPageState extends State<FeedPage> {
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: GustoDesign.secondary.withOpacity(0.1),
-                    borderRadius: GustoDesign.radiusSmall,
+                    color: WajabatDesign.secondary.withOpacity(0.1),
+                    borderRadius: WajabatDesign.radiusSmall,
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -158,20 +158,20 @@ class _FeedPageState extends State<FeedPage> {
                       const Icon(
                         Icons.location_on_rounded,
                         size: 16,
-                        color: GustoDesign.secondary,
+                        color: WajabatDesign.secondary,
                       ),
                       const SizedBox(width: 4),
                       Text(
                         'Alger Centre, Didouche Mourad',
-                        style: GustoDesign.textTheme.bodyMedium?.copyWith(
-                          color: GustoDesign.secondary,
+                        style: WajabatDesign.textTheme.bodyMedium?.copyWith(
+                          color: WajabatDesign.secondary,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const Icon(
                         Icons.keyboard_arrow_down_rounded,
                         size: 16,
-                        color: GustoDesign.secondary,
+                        color: WajabatDesign.secondary,
                       ),
                     ],
                   ),
@@ -197,20 +197,20 @@ class _FeedPageState extends State<FeedPage> {
                   child: InkWell(
                     onTap: () =>
                         setState(() => _selectedCategory = category['label']),
-                    borderRadius: GustoDesign.radiusMedium,
+                    borderRadius: WajabatDesign.radiusMedium,
                     child: AnimatedContainer(
                       duration: 200.ms,
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        color: isSelected ? GustoDesign.primary : Colors.white,
-                        borderRadius: GustoDesign.radiusMedium,
+                        color: isSelected ? WajabatDesign.primary : Colors.white,
+                        borderRadius: WajabatDesign.radiusMedium,
                         border: Border.all(
                           color: isSelected
                               ? Colors.transparent
                               : Colors.grey.withOpacity(0.2),
                         ),
-                        boxShadow: isSelected ? GustoDesign.shadowSmall : [],
+                        boxShadow: isSelected ? WajabatDesign.shadowSmall : [],
                       ),
                       child: Row(
                         children: [
@@ -220,16 +220,16 @@ class _FeedPageState extends State<FeedPage> {
                               size: 18,
                               color: isSelected
                                   ? Colors.white
-                                  : GustoDesign.secondary,
+                                  : WajabatDesign.secondary,
                             ),
                             const SizedBox(width: 8),
                           ],
                           Text(
                             category['label'],
-                            style: GustoDesign.textTheme.bodyMedium?.copyWith(
+                            style: WajabatDesign.textTheme.bodyMedium?.copyWith(
                               color: isSelected
                                   ? Colors.white
-                                  : GustoDesign.textDark,
+                                  : WajabatDesign.textDark,
                               fontWeight: isSelected
                                   ? FontWeight.bold
                                   : FontWeight.w500,
@@ -282,10 +282,10 @@ class _FeedPageState extends State<FeedPage> {
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.8),
         shape: BoxShape.circle,
-        boxShadow: GustoDesign.shadowSmall,
+        boxShadow: WajabatDesign.shadowSmall,
       ),
       child: IconButton(
-        icon: Icon(icon, color: GustoDesign.textDark, size: 20),
+        icon: Icon(icon, color: WajabatDesign.textDark, size: 20),
         onPressed: onTap,
       ),
     );

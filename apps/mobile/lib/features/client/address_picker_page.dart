@@ -65,7 +65,7 @@ class _AddressPickerPageState extends State<AddressPickerPage> {
             children: [
               TileLayer(
                 urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                userAgentPackageName: 'com.gusto.app',
+                userAgentPackageName: 'com.Wajabat.app',
               ),
             ],
           ),

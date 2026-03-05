@@ -37,7 +37,7 @@ class PromoCubit extends Cubit<PromoState> {
         'type': 'fixed',
         'description': '50 DA de réduction',
       },
-      'GUSTO20': {
+      'Wajabat20': {
         'code': 'TAYABLI20',
         'discount': 20,
         'type': 'percentage',

@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   backend:
     build:
@@ -6,42 +8,42 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - DATABASE_HOST=postgres
+      - DATABASE_HOST=db # Changed from postgres to db
       - DATABASE_PORT=5432
-      - DATABASE_USER=postgres
-      - DATABASE_PASSWORD=postgres
-      - DATABASE_NAME=tayabli
+      - DATABASE_USER=wajabat # Changed from postgres to wajabat
+      - DATABASE_PASSWORD=wajabat_password # Changed from postgres to wajabat_password
+      - DATABASE_NAME=wajabat # Changed from tayabli to wajabat
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - JWT_SECRET=dev_secret_do_not_use_in_prod
     depends_on:
-      - postgres
+      - db
       - redis
     networks:
-      - tayabli-network
+      - wajabat-network
 
-  postgres:
+  db:
     image: postgres:14-alpine
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=tayabli
+      - POSTGRES_USER=wajabat
+      - POSTGRES_PASSWORD=wajabat_password
+      - POSTGRES_DB=wajabat
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - tayabli-network
+      - wajabat-network
 
   redis:
     image: redis:7-alpine
     ports:
       - "6379:6379"
     networks:
-      - tayabli-network
+      - wajabat-network
 
 networks:
-  tayabli-network:
+  wajabat-network:
     driver: bridge
 
 volumes:

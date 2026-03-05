@@ -1,66 +1,75 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Order, OrderStatus } from './order.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
-
-export interface Order {
-  id: number;
-  items: number[];
-  total: number;
-  status: 'PENDING' | 'PREPARING' | 'DELIVERING' | 'DELIVERED';
-  createdAt: Date;
-}
+import { User } from '../users/user.entity';
+import { Dish } from '../dishes/dish.entity';
 
 @Injectable()
 export class OrdersService {
-  private orders: Order[] = [
-    {
-      id: 1,
-      items: [1, 3],
-      total: 1350,
-      status: 'DELIVERED',
-      createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
-    },
-    {
-      id: 2,
-      items: [2, 5],
-      total: 1150,
-      status: 'DELIVERING',
-      createdAt: new Date(Date.now() - 3 * 60 * 60 * 1000), // 3 hours ago
-    },
-    {
-      id: 3,
-      items: [4],
-      total: 600,
-      status: 'PREPARING',
-      createdAt: new Date(Date.now() - 30 * 60 * 1000), // 30 minutes ago
-    },
-  ];
-  private idCounter = 4;
+  constructor(
+    @InjectRepository(Order)
+    private ordersRepository: Repository<Order>,
+  ) {}
 
-  create(createOrderDto: CreateOrderDto) {
-    const order: Order = {
-      id: this.idCounter++,
+  async create(
+    createOrderDto: CreateOrderDto,
+    client: User,
+    cook: User,
+    dish: Dish,
+  ): Promise<Order> {
+    const order = this.ordersRepository.create({
       ...createOrderDto,
-      status: 'PENDING',
-      createdAt: new Date(),
-    };
-    this.orders.push(order);
+      client,
+      cook,
+      dish,
+      status: OrderStatus.PENDING,
+    });
+    return this.ordersRepository.save(order);
+  }
+
+  async findAll(): Promise<Order[]> {
+    return this.ordersRepository.find({
+      relations: ['client', 'cook', 'courier', 'dish'],
+    });
+  }
+
+  async findOne(id: number): Promise<Order> {
+    const order = await this.ordersRepository.findOne({
+      where: { id },
+      relations: ['client', 'cook', 'courier', 'dish'],
+    });
+    if (!order) {
+      throw new NotFoundException(`Order with ID ${id} not found`);
+    }
     return order;
   }
 
-  findAll() {
-    return this.orders;
+  async findByClient(clientId: number): Promise<Order[]> {
+    return this.ordersRepository.find({
+      where: { client: { id: clientId } },
+      relations: ['cook', 'courier', 'dish'],
+    });
   }
 
-  findOne(id: number) {
-    return this.orders.find((order) => order.id === id);
+  async findByCook(cookId: number): Promise<Order[]> {
+    return this.ordersRepository.find({
+      where: { cook: { id: cookId } },
+      relations: ['client', 'courier', 'dish'],
+    });
   }
 
-  updateStatus(id: number, status: Order['status']) {
-    const order = this.findOne(id);
-    if (order) {
-      order.status = status;
-      return order;
-    }
-    return null;
+  async updateStatus(id: number, status: OrderStatus): Promise<Order> {
+    const order = await this.findOne(id);
+    order.status = status;
+    return this.ordersRepository.save(order);
+  }
+
+  async assignCourier(id: number, courier: User): Promise<Order> {
+    const order = await this.findOne(id);
+    order.courier = courier;
+    order.status = OrderStatus.ASSIGNED;
+    return this.ordersRepository.save(order);
   }
 }

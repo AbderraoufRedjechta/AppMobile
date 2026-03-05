@@ -16,6 +16,7 @@ class CreateDishDto {
     description;
     price;
     stock;
+    image;
 }
 exports.CreateDishDto = CreateDishDto;
 __decorate([
@@ -38,4 +39,9 @@ __decorate([
     (0, class_validator_1.Min)(0),
     __metadata("design:type", Number)
 ], CreateDishDto.prototype, "stock", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], CreateDishDto.prototype, "image", void 0);
 //# sourceMappingURL=create-dish.dto.js.map

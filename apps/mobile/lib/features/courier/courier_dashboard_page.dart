@@ -110,7 +110,7 @@ class _CourierMapTabState extends State<_CourierMapTab> {
             children: [
               TileLayer(
                 urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                userAgentPackageName: 'com.gusto.app',
+                userAgentPackageName: 'com.Wajabat.app',
               ),
               // Mock Markers
               const MarkerLayer(
@@ -551,7 +551,7 @@ class _CourierProfileTab extends StatelessWidget {
             ),
           ),
           Text(
-            'Livreur Gusto',
+            'Livreur Wajabat',
             textAlign: TextAlign.center,
             style: GoogleFonts.outfit(color: Colors.grey[600]),
           ),

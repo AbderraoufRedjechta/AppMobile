@@ -20,11 +20,47 @@ let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
     }
+    async sendOtp(req) {
+        if (!req.phone) {
+            throw new common_1.UnauthorizedException('Phone number is required');
+        }
+        return this.authService.sendOtp(req.phone);
+    }
+    async verifyOtp(req) {
+        if (!req.phone || !req.otp) {
+            throw new common_1.UnauthorizedException('Phone number and OTP are required');
+        }
+        return this.authService.verifyOtp(req.phone, req.otp);
+    }
+    async register(req) {
+        return this.authService.register(req);
+    }
     async login(req) {
-        return this.authService.login(req);
+        return this.authService.loginWithEmail(req.email, req.pass || req.password);
     }
 };
 exports.AuthController = AuthController;
+__decorate([
+    (0, common_1.Post)('send-otp'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "sendOtp", null);
+__decorate([
+    (0, common_1.Post)('verify-otp'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "verifyOtp", null);
+__decorate([
+    (0, common_1.Post)('register'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "register", null);
 __decorate([
     (0, common_1.Post)('login'),
     __param(0, (0, common_1.Body)()),

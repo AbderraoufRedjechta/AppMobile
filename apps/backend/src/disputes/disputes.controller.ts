@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { DisputesService } from './disputes.service';
 import { CreateDisputeDto } from './dto/create-dispute.dto';
+import { User, UserRole } from '../users/user.entity';
 
 @Controller('disputes')
 export class DisputesController {
@@ -8,7 +9,10 @@ export class DisputesController {
 
   @Post()
   create(@Body() createDisputeDto: CreateDisputeDto) {
-    return this.disputesService.create(createDisputeDto);
+    // TODO: Get actual user from request (req.user) using JwtAuthGuard
+    // Mocking user for now to satisfy service signature
+    const mockUser = { id: 1, role: UserRole.CLIENT } as User;
+    return this.disputesService.create(createDisputeDto, mockUser);
   }
 
   @Get()

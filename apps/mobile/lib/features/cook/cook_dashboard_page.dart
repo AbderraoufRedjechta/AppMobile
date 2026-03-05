@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../auth/auth_cubit.dart';
+import '../client/orders_api_service.dart';
+import '../../core/api_client.dart';
 import 'menu_management_page.dart';
 
 class CookDashboardPage extends StatefulWidget {
@@ -54,11 +55,47 @@ class _CookDashboardPageState extends State<CookDashboardPage> {
   }
 }
 
-class _CookHomeTab extends StatelessWidget {
+class _CookHomeTab extends StatefulWidget {
   const _CookHomeTab();
 
   @override
+  State<_CookHomeTab> createState() => _CookHomeTabState();
+}
+
+class _CookHomeTabState extends State<_CookHomeTab> {
+  final OrdersApiService _ordersApiService = OrdersApiService(ApiClient());
+  List<Map<String, dynamic>> _orders = [];
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchDashboardData();
+  }
+
+  Future<void> _fetchDashboardData() async {
+    try {
+      final cookId = context.read<AuthCubit>().state.user?['id'] ?? 1;
+      final orders = await _ordersApiService.getCookOrders(cookId);
+      if (mounted) {
+        setState(() {
+          _orders = orders;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    int totalRevenue = 0;
+    for (var order in _orders) {
+      // Check for both property formats to be safe
+      totalRevenue += (order['totalAmount'] ?? order['total'] ?? 0) as int;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -88,7 +125,7 @@ class _CookHomeTab extends StatelessWidget {
                   child: _buildStatCard(
                     context,
                     title: 'Commandes',
-                    value: '5',
+                    value: '${_orders.length}',
                     icon: Icons.receipt_long,
                     color: Colors.blue,
                   ),
@@ -98,7 +135,7 @@ class _CookHomeTab extends StatelessWidget {
                   child: _buildStatCard(
                     context,
                     title: 'Revenus',
-                    value: '12 500 DA',
+                    value: '$totalRevenue DA',
                     icon: Icons.attach_money,
                     color: Colors.green,
                   ),
@@ -114,7 +151,15 @@ class _CookHomeTab extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            _buildOrderCard(context),
+            if (_isLoading)
+              const Center(child: CircularProgressIndicator())
+            else if (_orders.isEmpty)
+              const Center(child: Text('Aucune commande en cours.'))
+            else
+              ..._orders.map((o) => Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: _buildOrderCard(context, o),
+              )).toList(),
           ],
         ),
       ),
@@ -213,7 +258,10 @@ class _CookHomeTab extends StatelessWidget {
     );
   }
 
-  Widget _buildOrderCard(BuildContext context) {
+  Widget _buildOrderCard(BuildContext context, Map<String, dynamic> order) {
+    final status = order['status'] as String;
+    final clientName = order['client']?['name'] ?? 'Client inconnu';
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -234,7 +282,7 @@ class _CookHomeTab extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Commande #1234',
+                'Commande #${order['id']}',
                 style: GoogleFonts.outfit(fontWeight: FontWeight.bold),
               ),
               Container(
@@ -244,7 +292,7 @@ class _CookHomeTab extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
-                  'En préparation',
+                  status,
                   style: GoogleFonts.outfit(
                     color: Colors.orange,
                     fontWeight: FontWeight.bold,
@@ -263,7 +311,7 @@ class _CookHomeTab extends StatelessWidget {
                 child: Icon(Icons.person, size: 16, color: Colors.white),
               ),
               const SizedBox(width: 8),
-              Text('Client: Amine', style: GoogleFonts.outfit()),
+              Text('Client: $clientName', style: GoogleFonts.outfit()),
             ],
           ),
           const SizedBox(height: 16),

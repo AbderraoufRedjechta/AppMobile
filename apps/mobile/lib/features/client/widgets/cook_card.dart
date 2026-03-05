@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import '../../../../core/services/mock_data_service.dart';
-
 class CookCard extends StatelessWidget {
   final Map<String, dynamic> cook;
   final VoidCallback onTap;
@@ -10,11 +8,7 @@ class CookCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Find a featured dish for the cover image
-    final dishes = MockDataService.getDishesByCook(cook['id'] as int);
-    final coverImage = dishes.isNotEmpty
-        ? dishes.first['image'] as String
-        : 'couscous_royal.png'; // Fallback
+    final String coverImage = cook['coverImage'] ?? 'couscous_royal.png';
 
     return Container(
       margin: const EdgeInsets.only(bottom: 24),

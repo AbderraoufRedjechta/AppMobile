@@ -237,7 +237,7 @@ class ProfilePage extends StatelessWidget {
                         onTap: () {
                           showAboutDialog(
                             context: context,
-                            applicationName: 'Gusto',
+                            applicationName: 'Wajabat',
                             applicationVersion: '1.0.0',
                             applicationIcon: Icon(
                               Icons.restaurant_menu,

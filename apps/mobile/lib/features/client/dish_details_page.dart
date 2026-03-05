@@ -39,20 +39,27 @@ class _DishDetailsPageState extends State<DishDetailsPage> {
             expandedHeight: 300,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset(
-                'assets/images/dishes/${widget.dish['image']}',
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: Colors.grey[300],
-                    child: const Icon(
-                      Icons.restaurant,
-                      size: 100,
-                      color: Colors.grey,
+              background: widget.dish['image'] != null
+                  ? Image.network(
+                      widget.dish['image'].toString().startsWith('http')
+                          ? widget.dish['image']
+                          : 'http://10.0.2.2:3000/uploads/${widget.dish['image']}', // assuming local testing url
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: Colors.grey[300],
+                          child: const Icon(
+                            Icons.restaurant,
+                            size: 100,
+                            color: Colors.grey,
+                          ),
+                        );
+                      },
+                    )
+                  : Image.asset(
+                      'assets/images/dishes/couscous_royal.png',
+                      fit: BoxFit.cover,
                     ),
-                  );
-                },
-              ),
             ),
           ),
           // Contenu
@@ -188,12 +195,16 @@ class _DishDetailsPageState extends State<DishDetailsPage> {
                     // Cook Section
                     InkWell(
                           onTap: () {
+                            final cook = widget.dish['cook'];
+                            final cookId = cook != null ? cook['id'] : (widget.dish['cookId'] ?? 1);
+                            final cookName = cook != null ? cook['name'] : 'Chef Inconnu';
+
                             context.push(
-                              '/cook/${widget.dish['cookId'] ?? '1'}',
+                              '/cook/$cookId',
                               extra: {
-                                'id': widget.dish['cookId'] ?? '1',
-                                'name': 'Chef Fatima', // Mock name
-                                'rating': 4.9,
+                                'id': cookId,
+                                'name': cookName,
+                                'rating': 4.9, // Mock rating
                               },
                             );
                           },
@@ -217,12 +228,12 @@ class _DishDetailsPageState extends State<DishDetailsPage> {
                                   ),
                                 ),
                                 const SizedBox(width: 16),
-                                const Expanded(
+                                Expanded(
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
+                                      const Text(
                                         'Préparé par',
                                         style: TextStyle(
                                           fontSize: 12,
@@ -230,8 +241,8 @@ class _DishDetailsPageState extends State<DishDetailsPage> {
                                         ),
                                       ),
                                       Text(
-                                        'Chef Fatima',
-                                        style: TextStyle(
+                                        widget.dish['cook'] != null ? widget.dish['cook']['name'] : 'Chef Inconnu',
+                                        style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                         ),

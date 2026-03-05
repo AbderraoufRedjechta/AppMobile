@@ -15,12 +15,22 @@ class DashboardStats extends Equatable {
     required this.pendingApprovals,
   });
 
+  factory DashboardStats.fromJson(Map<String, dynamic> json) {
+    return DashboardStats(
+      totalOrders: json['totalOrders'] as int,
+      activeCooks: json['activeCooks'] as int,
+      activeCouriers: json['activeCouriers'] as int,
+      totalRevenue: (json['totalRevenue'] as num).toDouble(),
+      pendingApprovals: json['pendingApprovals'] as int,
+    );
+  }
+
   @override
   List<Object?> get props => [
-    totalOrders,
-    activeCooks,
-    activeCouriers,
-    totalRevenue,
-    pendingApprovals,
-  ];
+        totalOrders,
+        activeCooks,
+        activeCouriers,
+        totalRevenue,
+        pendingApprovals,
+      ];
 }

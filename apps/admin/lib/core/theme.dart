@@ -4,25 +4,25 @@ import 'package:google_fonts/google_fonts.dart';
 final adminTheme = ThemeData(
   useMaterial3: true,
   colorScheme: ColorScheme.fromSeed(
-    seedColor: const Color(0xFFE65100), // Deep Terracotta
-    primary: const Color(0xFFE65100),
-    secondary: const Color(0xFF2D3436), // Charcoal
+    seedColor: const Color(0xFF933D41), // Rouge Terre
+    primary: const Color(0xFF933D41),
+    secondary: const Color(0xFFE9B949), // Jaune Safran
     surface: Colors.white,
-    background: const Color(0xFFF5F5F5), // Light Grey for Dashboard bg
+    background: const Color(0xFFF8F4E9), // Blanc Chaud
   ),
-  scaffoldBackgroundColor: const Color(0xFFF5F5F5),
+  scaffoldBackgroundColor: const Color(0xFFF8F4E9),
   textTheme: GoogleFonts.outfitTextTheme(),
   appBarTheme: AppBarTheme(
     backgroundColor: Colors.white,
-    foregroundColor: const Color(0xFF2D3436),
+    foregroundColor: const Color(0xFF2D2D2D),
     elevation: 0,
     centerTitle: false,
     titleTextStyle: GoogleFonts.outfit(
       fontSize: 20,
       fontWeight: FontWeight.bold,
-      color: const Color(0xFF2D3436),
+      color: const Color(0xFF2D2D2D),
     ),
-    iconTheme: const IconThemeData(color: Color(0xFF2D3436)),
+    iconTheme: const IconThemeData(color: Color(0xFF2D2D2D)),
   ),
   cardTheme: CardThemeData(
     color: Colors.white,
@@ -35,10 +35,10 @@ final adminTheme = ThemeData(
   ),
   navigationRailTheme: NavigationRailThemeData(
     backgroundColor: Colors.white,
-    selectedIconTheme: const IconThemeData(color: Color(0xFFE65100)),
+    selectedIconTheme: const IconThemeData(color: Color(0xFF933D41)),
     unselectedIconTheme: const IconThemeData(color: Colors.grey),
     selectedLabelTextStyle: GoogleFonts.outfit(
-      color: const Color(0xFFE65100),
+      color: const Color(0xFF933D41),
       fontWeight: FontWeight.bold,
     ),
     unselectedLabelTextStyle: GoogleFonts.outfit(color: Colors.grey),

@@ -5,29 +5,54 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DishesService = void 0;
 const common_1 = require("@nestjs/common");
+const typeorm_1 = require("@nestjs/typeorm");
+const typeorm_2 = require("typeorm");
+const dish_entity_1 = require("./dish.entity");
 let DishesService = class DishesService {
-    dishes = [];
-    idCounter = 1;
-    create(createDishDto) {
-        const dish = {
-            id: this.idCounter++,
+    dishesRepository;
+    constructor(dishesRepository) {
+        this.dishesRepository = dishesRepository;
+    }
+    async create(createDishDto, cook) {
+        const dish = this.dishesRepository.create({
             ...createDishDto,
-        };
-        this.dishes.push(dish);
+            cook,
+        });
+        return this.dishesRepository.save(dish);
+    }
+    async findAll() {
+        return this.dishesRepository.find({ relations: ['cook'] });
+    }
+    async findByCook(cookId) {
+        return this.dishesRepository.find({
+            where: { cook: { id: cookId } },
+            relations: ['cook'],
+        });
+    }
+    async findOne(id) {
+        const dish = await this.dishesRepository.findOne({
+            where: { id },
+            relations: ['cook'],
+        });
+        if (!dish) {
+            throw new common_1.NotFoundException(`Dish with ID ${id} not found`);
+        }
         return dish;
-    }
-    findAll() {
-        return this.dishes;
-    }
-    findOne(id) {
-        return this.dishes.find(dish => dish.id === id);
     }
 };
 exports.DishesService = DishesService;
 exports.DishesService = DishesService = __decorate([
-    (0, common_1.Injectable)()
+    (0, common_1.Injectable)(),
+    __param(0, (0, typeorm_1.InjectRepository)(dish_entity_1.Dish)),
+    __metadata("design:paramtypes", [typeorm_2.Repository])
 ], DishesService);
 //# sourceMappingURL=dishes.service.js.map

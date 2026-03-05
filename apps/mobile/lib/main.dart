@@ -1,30 +1,46 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'core/theme/gusto_theme.dart';
-import 'core/router.dart';
-import 'features/auth/auth_cubit.dart';
-import 'features/client/cart_cubit.dart';
-import 'features/client/favorites_cubit.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+// import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Generated
+import 'core/services/notifications_service.dart';
 
-import 'features/client/promo_cubit.dart';
-import 'core/theme_cubit.dart';
-
-// REBUILD ENTRY POINT
-void main() {
-  // Speed up animations for debugging/dev
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   Animate.restartOnHotReload = true;
-  runApp(const GustoApp());
+  
+  final apiClient = ApiClient();
+  final authApiService = AuthApiService(apiClient);
+  final notificationsService = NotificationsService();
+  
+  await notificationsService.initialize();
+
+  runApp(WajabatApp(
+    apiClient: apiClient,
+    authApiService: authApiService,
+    notificationsService: notificationsService,
+  ));
 }
 
-class GustoApp extends StatelessWidget {
-  const GustoApp({super.key});
+class WajabatApp extends StatelessWidget {
+  final ApiClient apiClient;
+  final AuthApiService authApiService;
+  final NotificationsService notificationsService;
+
+  const WajabatApp({
+    super.key,
+    required this.apiClient,
+    required this.authApiService,
+    required this.notificationsService,
+  });
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<AuthCubit>(create: (context) => AuthCubit()),
+        BlocProvider<AuthCubit>(
+          create: (context) => AuthCubit(
+            authService: authApiService,
+            apiClient: apiClient,
+          ),
+        ),
         BlocProvider<CartCubit>(create: (context) => CartCubit()),
         BlocProvider<FavoritesCubit>(create: (context) => FavoritesCubit()),
         BlocProvider<ThemeCubit>(create: (context) => ThemeCubit()),
@@ -33,33 +49,22 @@ class GustoApp extends StatelessWidget {
       child: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, themeMode) {
           return MaterialApp.router(
-            title: 'Gusto MAX',
+            title: 'Wajabat',
             debugShowCheckedModeBanner: false,
-            // Light Theme
-            theme: ThemeData(
-              useMaterial3: true,
-              brightness: Brightness.light,
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: GustoTheme.primary,
-                primary: GustoTheme.primary,
-                secondary: GustoTheme.secondary,
-                surface: GustoTheme.surface,
-                background: GustoTheme.background,
-              ),
-              scaffoldBackgroundColor: GustoTheme.background,
-              textTheme: GustoTheme.textTheme,
-            ),
-            // Dark Theme
-            darkTheme: ThemeData(
-              useMaterial3: true,
-              brightness: Brightness.dark,
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: GustoTheme.primary,
-                brightness: Brightness.dark,
-              ),
-            ),
+            theme: WajabatTheme.lightTheme,
+            darkTheme: WajabatTheme.darkTheme,
             themeMode: themeMode,
             routerConfig: router,
+            localizationsDelegates: const [
+              // AppLocalizations.delegate, // Generated
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en', ''),
+              Locale('ar', ''),
+            ],
           );
         },
       ),

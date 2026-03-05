@@ -3,4 +3,5 @@ export declare class CreateDishDto {
     description: string;
     price: number;
     stock: number;
+    image: string;
 }

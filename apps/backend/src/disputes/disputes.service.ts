@@ -1,40 +1,51 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateDisputeDto } from './dto/create-dispute.dto';
-
-export interface Dispute {
-  id: number;
-  orderId: number;
-  reason: string;
-  status: 'OPEN' | 'RESOLVED';
-  createdAt: Date;
-}
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Dispute, DisputeStatus } from './dispute.entity';
+import { OrdersService } from '../orders/orders.service';
+import { User } from '../users/user.entity';
 
 @Injectable()
 export class DisputesService {
-  private disputes: Dispute[] = [];
-  private idCounter = 1;
+  constructor(
+    @InjectRepository(Dispute)
+    private disputesRepository: Repository<Dispute>,
+    private ordersService: OrdersService,
+  ) {}
 
-  create(createDisputeDto: CreateDisputeDto) {
-    const dispute: Dispute = {
-      id: this.idCounter++,
-      ...createDisputeDto,
-      status: 'OPEN',
-      createdAt: new Date(),
-    };
-    this.disputes.push(dispute);
-    return dispute;
-  }
-
-  findAll() {
-    return this.disputes;
-  }
-
-  resolve(id: number) {
-    const dispute = this.disputes.find((d) => d.id === id);
-    if (dispute) {
-      dispute.status = 'RESOLVED';
-      return dispute;
+  async create(
+    createDisputeDto: CreateDisputeDto,
+    user: User,
+  ): Promise<Dispute> {
+    const order = await this.ordersService.findOne(createDisputeDto.orderId);
+    if (!order) {
+      throw new NotFoundException(
+        `Order with ID ${createDisputeDto.orderId} not found`,
+      );
     }
-    return null;
+
+    const dispute = this.disputesRepository.create({
+      order,
+      user,
+      reason: createDisputeDto.reason,
+      status: DisputeStatus.OPEN,
+    });
+
+    return this.disputesRepository.save(dispute);
+  }
+
+  async findAll(): Promise<Dispute[]> {
+    return this.disputesRepository.find({ relations: ['order', 'user'] });
+  }
+
+  async resolve(id: number): Promise<Dispute> {
+    const dispute = await this.disputesRepository.findOne({ where: { id } });
+    if (!dispute) {
+      throw new NotFoundException(`Dispute with ID ${id} not found`);
+    }
+
+    dispute.status = DisputeStatus.RESOLVED;
+    return this.disputesRepository.save(dispute);
   }
 }

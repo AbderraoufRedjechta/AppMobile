@@ -4,7 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'favorites_cubit.dart';
 import 'cart_cubit.dart';
 import 'widgets/dish_card.dart';
-import '../../core/services/mock_data_service.dart';
+import '../../core/api_client.dart';
+import '../client/dishes_api_service.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
@@ -14,6 +15,7 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
+  final DishesApiService _dishesApiService = DishesApiService(ApiClient());
   List<Map<String, dynamic>> _allDishes = [];
   bool _isLoading = true;
 
@@ -24,13 +26,18 @@ class _FavoritesPageState extends State<FavoritesPage> {
   }
 
   Future<void> _fetchDishes() async {
-    // Simulate network delay
-    await Future.delayed(const Duration(milliseconds: 500));
-    if (mounted) {
-      setState(() {
-        _allDishes = MockDataService.getDishes();
-        _isLoading = false;
-      });
+    try {
+      final dishes = await _dishesApiService.getDishes();
+      if (mounted) {
+        setState(() {
+          _allDishes = dishes;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
     }
   }
 

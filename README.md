@@ -1,6 +1,6 @@
-# Gusto Monorepo
+# Wajabat Monorepo
 
-This repository contains the source code for the Tayabli platform.
+This repository contains the source code for the Wajabat platform (formerly Gusto/Tayabli).
 
 ## Structure
 

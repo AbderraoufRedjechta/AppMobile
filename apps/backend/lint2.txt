@@ -1,0 +1,23 @@
+﻿
+> Wajabat-backend@0.0.1 lint
+> eslint "{src,apps,libs,test}/**/*.ts" --fix
+
+
+Z:\wajabat\apps\backend\src\auth\auth.controller.ts
+  26:38  warning  Unsafe argument of type `any` assigned to a parameter of type `Partial<User>`  @typescript-eslint/no-unsafe-argument
+
+Z:\wajabat\apps\backend\src\auth\roles.guard.ts
+  18:11  error  Unsafe assignment of an `any` value           @typescript-eslint/no-unsafe-assignment
+  19:26  error  Unsafe member access .user on an `any` value  @typescript-eslint/no-unsafe-member-access
+
+Z:\wajabat\apps\backend\src\dishes\dishes.controller.ts
+  16:53  warning  Unsafe argument of type `any` assigned to a parameter of type `User`  @typescript-eslint/no-unsafe-argument
+
+Z:\wajabat\apps\backend\src\finance\finance.service.ts
+  10:50  error  The two values in this comparison do not have a shared enum type  @typescript-eslint/no-unsafe-enum-comparison
+
+Z:\wajabat\apps\backend\src\reviews\reviews.controller.ts
+  15:39  warning  Unsafe argument of type `any` assigned to a parameter of type `Partial<Review>`  @typescript-eslint/no-unsafe-argument
+
+Ô£û 6 problems (3 errors, 3 warnings)
+

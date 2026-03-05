@@ -6,8 +6,8 @@ export declare class KycController {
         cni_front?: Express.Multer.File[];
         cni_back?: Express.Multer.File[];
         kitchen_photo?: Express.Multer.File[];
-    }, body: any): {
+    }): Promise<{
         message: string;
         status: string;
-    };
+    }>;
 }

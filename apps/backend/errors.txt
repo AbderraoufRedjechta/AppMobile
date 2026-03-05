@@ -1,0 +1,6 @@
+﻿src/auth/roles.decorator.ts(2,10): error TS2459: Module '"../users/users.service"' declares 'UserRole' locally, but it is not exported.
+src/auth/roles.guard.ts(4,10): error TS2459: Module '"../users/users.service"' declares 'UserRole' locally, but it is not exported.
+src/finance/finance.service.ts(10,36): error TS2339: Property 'filter' does not exist on type 'Promise<Order[]>'.
+src/finance/finance.service.ts(18,27): error TS2339: Property 'length' does not exist on type 'Promise<Order[]>'.
+src/users/users.service.ts(14,5): error TS2322: Type 'User | null' is not assignable to type 'User | undefined'.
+  Type 'null' is not assignable to type 'User | undefined'.

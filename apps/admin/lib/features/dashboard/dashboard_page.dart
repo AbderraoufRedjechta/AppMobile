@@ -11,7 +11,7 @@ class DashboardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tayabli Admin'),
+        title: const Text('Wajabat Admin'),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),

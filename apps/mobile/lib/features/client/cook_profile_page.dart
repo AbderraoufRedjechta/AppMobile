@@ -6,28 +6,48 @@ import 'cart_cubit.dart';
 import 'favorites_cubit.dart';
 import 'widgets/dish_card.dart';
 
-class CookProfilePage extends StatelessWidget {
+import '../../core/api_client.dart';
+import 'dishes_api_service.dart';
+
+class CookProfilePage extends StatefulWidget {
   final Map<String, dynamic> cook;
 
   const CookProfilePage({super.key, required this.cook});
 
   @override
-  Widget build(BuildContext context) {
-    // Mock data for demonstration
-    final dishes = List.generate(
-      4,
-      (index) => {
-        'id': index + 100,
-        'name': 'Plat Spécial ${index + 1}',
-        'description': 'Délicieux plat fait maison avec amour.',
-        'price': 800 + (index * 100),
-        'image': 'couscous_royal.png', // Placeholder
-        'stock': 5,
-        'cookId': cook['id'],
-      },
-    );
+  State<CookProfilePage> createState() => _CookProfilePageState();
+}
 
-    return Scaffold(
+class _CookProfilePageState extends State<CookProfilePage> {
+  final DishesApiService _dishesApiService = DishesApiService(ApiClient());
+  List<Map<String, dynamic>> _dishes = [];
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadDishes();
+  }
+
+  Future<void> _loadDishes() async {
+    try {
+      final dishes = await _dishesApiService.getDishesByCook(widget.cook['id'] as int);
+      if (mounted) {
+        setState(() {
+          _dishes = dishes;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final cook = widget.cook;
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -126,25 +146,30 @@ class CookProfilePage extends StatelessWidget {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 16),
-                  BlocBuilder<FavoritesCubit, FavoritesState>(
-                    builder: (context, state) {
-                      return GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio:
-                                  0.6, // Adjusted to prevent overflow
-                              crossAxisSpacing: 16,
-                              mainAxisSpacing: 16,
-                            ),
-                        itemCount: dishes.length,
-                        itemBuilder: (context, index) {
-                          final dish = dishes[index];
-                          final isFavorite = state.isFavorite(
-                            dish['id'] as int,
-                          );
+                  if (_isLoading)
+                    const Center(child: CircularProgressIndicator())
+                  else if (_dishes.isEmpty)
+                    const Center(child: Text("Aucun plat pour l'instant."))
+                  else
+                    BlocBuilder<FavoritesCubit, FavoritesState>(
+                      builder: (context, state) {
+                        return GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio:
+                                    0.6, // Adjusted to prevent overflow
+                                crossAxisSpacing: 16,
+                                mainAxisSpacing: 16,
+                              ),
+                          itemCount: _dishes.length,
+                          itemBuilder: (context, index) {
+                            final dish = _dishes[index];
+                            final isFavorite = state.isFavorite(
+                              dish['id'] as int,
+                            );
 
                           return DishCard(
                             dish: dish,

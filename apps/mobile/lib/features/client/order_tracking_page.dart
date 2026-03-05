@@ -2,16 +2,61 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
+import 'dart:async';
+import '../../core/api_client.dart';
+import 'orders_api_service.dart';
 
-class OrderTrackingPage extends StatelessWidget {
+class OrderTrackingPage extends StatefulWidget {
   final Map<String, dynamic> order;
 
   const OrderTrackingPage({super.key, required this.order});
 
   @override
+  State<OrderTrackingPage> createState() => _OrderTrackingPageState();
+}
+
+class _OrderTrackingPageState extends State<OrderTrackingPage> {
+  late Map<String, dynamic> _currentOrder;
+  Timer? _pollingTimer;
+  final OrdersApiService _ordersApiService = OrdersApiService(ApiClient());
+
+  @override
+  void initState() {
+    super.initState();
+    _currentOrder = widget.order;
+    _startPolling();
+  }
+
+  void _startPolling() {
+    _pollingTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
+      _fetchOrderUpdate();
+    });
+  }
+
+  Future<void> _fetchOrderUpdate() async {
+    try {
+      final updatedOrder = await _ordersApiService.getOrderById(_currentOrder['id'].toString());
+      if (mounted) {
+        setState(() {
+          _currentOrder = updatedOrder;
+        });
+      }
+    } catch (e) {
+      // Ignore errors during polling
+    }
+  }
+
+  @override
+  void dispose() {
+    _pollingTimer?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final status = order['status'] as String;
-    final createdAt = DateTime.parse(order['createdAt'] as String);
+    final status = _currentOrder['status'] as String;
+    final dateStr = _currentOrder['createdAt'] ?? _currentOrder['date'] ?? DateTime.now().toIso8601String();
+    final createdAt = DateTime.parse(dateStr as String);
 
     // Mock locations for demo
     final courierLocation = LatLng(36.7525, 3.0420); // Algiers
@@ -19,7 +64,7 @@ class OrderTrackingPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Commande #${order['id']}'),
+        title: Text('Commande #${_currentOrder['id']}'),
         backgroundColor: const Color(0xFFFF8C00),
         foregroundColor: Colors.white,
       ),
@@ -38,7 +83,7 @@ class OrderTrackingPage extends StatelessWidget {
                   TileLayer(
                     urlTemplate:
                         'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    userAgentPackageName: 'com.gusto.app',
+                    userAgentPackageName: 'com.Wajabat.app',
                   ),
                   PolylineLayer(
                     polylines: [
@@ -221,13 +266,13 @@ class OrderTrackingPage extends StatelessWidget {
                         _buildDetailRow(
                           Icons.receipt,
                           'Numéro',
-                          '#${order['id']}',
+                          '#${_currentOrder['id']}',
                         ),
                         const SizedBox(height: 12),
                         _buildDetailRow(
                           Icons.shopping_bag,
                           'Articles',
-                          '${(order['items'] as List).length} plat(s)',
+                          '${_currentOrder['quantity'] ?? 1} plat(s)',
                         ),
                         const SizedBox(height: 12),
                         _buildDetailRow(
@@ -247,7 +292,7 @@ class OrderTrackingPage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              '${order['total']} DA',
+                              '${_currentOrder['totalAmount'] ?? _currentOrder['total'] ?? 0} DA',
                               style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
@@ -273,9 +318,9 @@ class OrderTrackingPage extends StatelessWidget {
                             child: ElevatedButton.icon(
                               onPressed: () {
                                 context.push(
-                                  '/chat/${order['id']}',
+                                  '/chat/${_currentOrder['id']}',
                                   extra: {
-                                    'order': order,
+                                    'order': _currentOrder,
                                     'targetRole': 'courier',
                                     'targetName': 'Livreur',
                                   },
@@ -301,11 +346,11 @@ class OrderTrackingPage extends StatelessWidget {
                             child: ElevatedButton.icon(
                               onPressed: () {
                                 context.push(
-                                  '/chat/${order['id']}',
+                                  '/chat/${_currentOrder['id']}',
                                   extra: {
-                                    'order': order,
+                                    'order': _currentOrder,
                                     'targetRole': 'cook',
-                                    'targetName': order['cookName'],
+                                    'targetName': _currentOrder['cookName'] ?? 'Cuisinier',
                                   },
                                 );
                               },
@@ -333,11 +378,11 @@ class OrderTrackingPage extends StatelessWidget {
                             child: OutlinedButton.icon(
                               onPressed: () {
                                 context.push(
-                                  '/chat/${order['id']}',
+                                  '/chat/${_currentOrder['id']}',
                                   extra: {
-                                    'order': order,
+                                    'order': _currentOrder,
                                     'targetRole': 'cook',
-                                    'targetName': order['cookName'],
+                                    'targetName': _currentOrder['cookName'] ?? 'Cuisinier',
                                   },
                                 );
                               },
@@ -360,8 +405,8 @@ class OrderTrackingPage extends StatelessWidget {
                             child: ElevatedButton.icon(
                               onPressed: () {
                                 context.push(
-                                  '/rate-order/${order['id']}',
-                                  extra: order,
+                                  '/rate-order/${_currentOrder['id']}',
+                                  extra: _currentOrder,
                                 );
                               },
                               icon: const Icon(Icons.star),
