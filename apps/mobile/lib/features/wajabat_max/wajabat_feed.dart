@@ -255,7 +255,11 @@ class _WajabatFeedState extends State<WajabatFeed> {
     }
 
     return GestureDetector(
-      onTap: () => context.push('/cook/${cook['id']}', extra: cook),
+      onTap: () {
+        if (cook['id'] != null) {
+          context.push('/cook/${cook['id']}', extra: cook);
+        }
+      },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
@@ -291,10 +295,13 @@ class _WajabatFeedState extends State<WajabatFeed> {
                   right: 12,
                   child: BlocBuilder<FavoritesCubit, FavoritesState>(
                     builder: (context, state) {
-                      final isFav = state.isFavoriteCook(cook['id'] as int);
+                      final id = cook['id'];
+                      final isFav = id != null && state.isFavoriteCook(id as int);
                       return GestureDetector(
                         onTap: () {
-                          context.read<FavoritesCubit>().toggleFavoriteCook(cook['id'] as int);
+                          if (id != null) {
+                            context.read<FavoritesCubit>().toggleFavoriteCook(id as int);
+                          }
                         },
                         child: Container(
                           padding: const EdgeInsets.all(8),
@@ -337,7 +344,7 @@ class _WajabatFeedState extends State<WajabatFeed> {
                         const Icon(Icons.star, size: 16, color: WajabatTheme.secondary),
                         const SizedBox(width: 4),
                         Text(
-                          '${cook['rating']}',
+                          '${cook['rating'] ?? '4.8'}',
                           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                         ),
                         Text(

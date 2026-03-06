@@ -292,11 +292,11 @@ class _SearchPageState extends State<SearchPage>
               ),
             ),
             title: Text(
-              dish['name'],
+              dish['name']?.toString() ?? 'Plat',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             subtitle: Text(
-              '${dish['price']} DA • ${dish['cookName']}',
+              '${dish['price'] ?? 0} DA • ${dish['cookName'] ?? 'Cuisinier'}',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -345,14 +345,14 @@ class _SearchPageState extends State<SearchPage>
             leading: CircleAvatar(
               radius: 30,
               backgroundColor: const Color(0xFF933D41),
-              child: Text(cook['avatar'], style: const TextStyle(fontSize: 24)),
+              child: Text(cook['avatar']?.toString() ?? '👩‍🍳', style: const TextStyle(fontSize: 24)),
             ),
             title: Text(
-              cook['name'],
+              cook['name']?.toString() ?? 'Cuisinier Local',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             subtitle: Text(
-              cook['specialty'],
+              cook['specialty']?.toString() ?? 'Spécialités Maison',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),

@@ -188,7 +188,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           ...groupedItems.entries.map((entry) {
                             final dish = entry.value.first;
                             final quantity = entry.value.length;
-                            final total = (dish['price'] as int) * quantity;
+                            final price = int.tryParse(dish['price']?.toString() ?? '0') ?? 0;
+                            final total = price * quantity;
 
                             return Padding(
                               padding: const EdgeInsets.only(bottom: 8.0),
@@ -292,7 +293,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
   ) {
     final Map<int, List<Map<String, dynamic>>> grouped = {};
     for (final item in items) {
-      final id = item['id'] as int;
+      final rawId = item['id'];
+      if (rawId == null) continue;
+      final id = rawId as int;
       if (!grouped.containsKey(id)) {
         grouped[id] = [];
       }
@@ -375,9 +378,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
       final clientId = context.read<AuthCubit>().state.user?.id ?? 1;
       
       final firstDish = items.first;
-      final cookId = firstDish['cook'] != null ? firstDish['cook']['id'] : 1;
-      final dishId = firstDish['id'] as int;
-      final itemIds = items.map((e) => e['id'] as int).toList();
+      final cookId = firstDish['cook'] != null ? (firstDish['cook']['id'] ?? 1) : 1;
+      final dishId = (firstDish['id'] ?? 1) as int;
+      final itemIds = items.map((e) => (e['id'] ?? 0) as int).where((id) => id != 0).toList();
 
       final orderApi = OrdersApiService(ApiClient());
       final createdOrder = await orderApi.createOrder(

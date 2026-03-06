@@ -62,7 +62,10 @@ class _FavoritesPageState extends State<FavoritesPage> {
           }
 
           final favoriteDishes = _allDishes
-              .where((dish) => favState.isFavorite(dish['id'] as int))
+              .where((dish) {
+                final id = dish['id'];
+                return id != null && favState.isFavorite(id as int);
+              })
               .toList();
 
           if (favoriteDishes.isEmpty) {
@@ -112,9 +115,10 @@ class _FavoritesPageState extends State<FavoritesPage> {
                 dish: dish,
                 isFavorite: true,
                 onFavoriteToggle: () {
-                  context.read<FavoritesCubit>().removeFavorite(
-                    dish['id'] as int,
-                  );
+                  final id = dish['id'];
+                  if (id != null) {
+                    context.read<FavoritesCubit>().removeFavorite(id as int);
+                  }
                 },
                 onTap: () {
                   context.push('/dish/${dish['id']}', extra: dish);
@@ -123,7 +127,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   context.read<CartCubit>().addToCart(dish);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('${dish['name']} ajouté au panier'),
+                      content: Text('${dish['name'] ?? 'Plat'} ajouté au panier'),
                       duration: const Duration(seconds: 1),
                       backgroundColor: WajabatTheme.primary,
                       behavior: SnackBarBehavior.floating,

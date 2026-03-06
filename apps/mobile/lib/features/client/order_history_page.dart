@@ -119,10 +119,10 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                 itemCount: _orders.length,
                 itemBuilder: (context, index) {
                   final order = _orders[index];
-                  final status = order['status'] as String;
+                  final status = (order['status'] ?? 'PENDING').toString();
                   // Handle mock format or real format for date
-                  final dateStr = order['createdAt'] ?? order['date'] ?? DateTime.now().toIso8601String();
-                  final createdAt = DateTime.parse(dateStr as String);
+                  final dateStr = (order['createdAt'] ?? order['date'] ?? DateTime.now().toIso8601String()).toString();
+                  final createdAt = DateTime.tryParse(dateStr) ?? DateTime.now();
 
                   return Container(
                     margin: const EdgeInsets.only(bottom: 16),
@@ -148,7 +148,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Commande #${order['id']}',
+                                  'Commande #${order['id'] ?? '?' }',
                                   style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
