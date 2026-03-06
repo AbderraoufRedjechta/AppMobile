@@ -9,7 +9,7 @@ class PromoCodesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Codes Promo'),
-        backgroundColor: const Color(0xFFFF8C00),
+        backgroundColor: const Color(0xFF933D41),
         foregroundColor: Colors.white,
       ),
       body: ListView(

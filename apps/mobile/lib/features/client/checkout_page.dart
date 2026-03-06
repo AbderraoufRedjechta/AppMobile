@@ -23,9 +23,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Commander'),
-        backgroundColor: const Color(0xFFFF8C00),
+        title: const Text('Commander', style: TextStyle(fontWeight: FontWeight.bold)),
+        backgroundColor: const Color(0xFF933D41), // Wajabat Rouge Terre
         foregroundColor: Colors.white,
+        elevation: 0,
       ),
       body: Stepper(
         type: StepperType.horizontal,
@@ -57,12 +58,17 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   child: ElevatedButton(
                     onPressed: details.onStepContinue,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFFF8C00),
+                      backgroundColor: const Color(0xFF933D41), // Wajabat Rouge Terre
                       foregroundColor: Colors.white,
+                      elevation: 0,
                       padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
                     ),
                     child: Text(
                       _currentStep == 2 ? 'Confirmer la commande' : 'Suivant',
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
@@ -72,7 +78,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     onPressed: details.onStepCancel,
                     child: const Text(
                       'Retour',
-                      style: TextStyle(color: Colors.grey),
+                      style: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
@@ -105,10 +111,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   onPressed: () {
                     context.push('/addresses');
                   },
-                  icon: const Icon(Icons.add, color: Color(0xFFFF8C00)),
+                  icon: const Icon(Icons.add, color: Color(0xFF933D41)),
                   label: const Text(
                     'Ajouter une adresse',
-                    style: TextStyle(color: Color(0xFFFF8C00)),
+                    style: TextStyle(color: Color(0xFF933D41), fontWeight: FontWeight.bold),
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -255,9 +261,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                               Text(
                                 '${state.total + 300} DZD',
                                 style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w900,
                                   fontSize: 18,
-                                  color: Color(0xFFFF8C00),
+                                  color: Color(0xFF933D41), // Wajabat Rouge Terre
                                 ),
                               ),
                             ],
@@ -314,13 +320,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
     IconData? icon,
   }) {
     return RadioListTile<String>(
-      title: Text(title),
+      title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
       subtitle: Text(subtitle),
       value: value,
       groupValue: groupValue,
       onChanged: onChanged,
       secondary: icon != null ? Icon(icon, color: Colors.grey[600]) : null,
-      activeColor: const Color(0xFFFF8C00),
+      activeColor: const Color(0xFF933D41), // Wajabat Rouge Terre
       contentPadding: EdgeInsets.zero,
     );
   }
@@ -366,7 +372,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
         return;
       }
 
-      final clientId = context.read<AuthCubit>().state.user?['id'] ?? 1;
+      final clientId = context.read<AuthCubit>().state.user?.id ?? 1;
       
       final firstDish = items.first;
       final cookId = firstDish['cook'] != null ? firstDish['cook']['id'] : 1;

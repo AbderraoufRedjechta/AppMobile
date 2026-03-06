@@ -9,7 +9,7 @@ class LoyaltyPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Fidélité'),
-        backgroundColor: const Color(0xFFFF8C00),
+        backgroundColor: const Color(0xFF933D41),
         foregroundColor: Colors.white,
         elevation: 0,
       ),
@@ -33,7 +33,7 @@ class LoyaltyPage extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(
-        color: Color(0xFFFF8C00),
+        color: Color(0xFF933D41),
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(32)),
       ),
       child: Column(
@@ -180,7 +180,7 @@ class LoyaltyPage extends StatelessWidget {
           ElevatedButton(
             onPressed: isAvailable ? () {} : null,
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFFF8C00),
+              backgroundColor: const Color(0xFF933D41),
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),

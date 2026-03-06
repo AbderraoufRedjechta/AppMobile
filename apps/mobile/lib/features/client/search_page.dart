@@ -169,9 +169,9 @@ class _SearchPageState extends State<SearchPage>
             if (_isSearching) ...[
               TabBar(
                 controller: _tabController,
-                labelColor: const Color(0xFFE65100),
+                labelColor: const Color(0xFF933D41),
                 unselectedLabelColor: Colors.grey,
-                indicatorColor: const Color(0xFFE65100),
+                indicatorColor: const Color(0xFF933D41),
                 tabs: [
                   Tab(text: 'Plats (${_dishResults.length})'),
                   Tab(text: 'Cuisiniers (${_cookResults.length})'),
@@ -344,7 +344,7 @@ class _SearchPageState extends State<SearchPage>
           child: ListTile(
             leading: CircleAvatar(
               radius: 30,
-              backgroundColor: const Color(0xFFE65100),
+              backgroundColor: const Color(0xFF933D41),
               child: Text(cook['avatar'], style: const TextStyle(fontSize: 24)),
             ),
             title: Text(
@@ -428,7 +428,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
             min: 0,
             max: 5000,
             divisions: 50,
-            activeColor: const Color(0xFFFF8C00),
+            activeColor: const Color(0xFF933D41),
             labels: RangeLabels(
               '${_priceRange.start.round()} DA',
               '${_priceRange.end.round()} DA',
@@ -466,10 +466,10 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   return ChoiceChip(
                     label: Text(sort),
                     selected: isSelected,
-                    selectedColor: const Color(0xFFFF8C00).withOpacity(0.2),
+                    selectedColor: const Color(0xFF933D41).withOpacity(0.2),
                     labelStyle: TextStyle(
                       color: isSelected
-                          ? const Color(0xFFFF8C00)
+                          ? const Color(0xFF933D41)
                           : Colors.black,
                       fontWeight: isSelected
                           ? FontWeight.bold
@@ -490,7 +490,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
             child: ElevatedButton(
               onPressed: () => context.pop(),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFFF8C00),
+                backgroundColor: const Color(0xFF933D41),
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(

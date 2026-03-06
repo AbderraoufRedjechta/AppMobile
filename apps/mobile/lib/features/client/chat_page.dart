@@ -105,7 +105,7 @@ class _ChatPageState extends State<ChatPage> {
             ),
           ],
         ),
-        backgroundColor: const Color(0xFFFF8C00),
+        backgroundColor: const Color(0xFF933D41),
         foregroundColor: Colors.white,
         actions: [
           IconButton(
@@ -149,7 +149,7 @@ class _ChatPageState extends State<ChatPage> {
                     ),
                     decoration: BoxDecoration(
                       color: isClient
-                          ? const Color(0xFFFF8C00)
+                          ? const Color(0xFF933D41)
                           : Colors.grey[200],
                       borderRadius: BorderRadius.circular(16),
                     ),
@@ -218,7 +218,7 @@ class _ChatPageState extends State<ChatPage> {
                   const SizedBox(width: 8),
                   Container(
                     decoration: const BoxDecoration(
-                      color: Color(0xFFFF8C00),
+                      color: Color(0xFF933D41),
                       shape: BoxShape.circle,
                     ),
                     child: IconButton(

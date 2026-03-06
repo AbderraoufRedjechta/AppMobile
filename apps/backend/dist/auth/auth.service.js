@@ -25,7 +25,7 @@ let AuthService = AuthService_1 = class AuthService {
         this.jwtService = jwtService;
     }
     async sendOtp(phone) {
-        const otp = '1234';
+        const otp = '123456';
         this.otpStore.set(phone, otp);
         this.logger.log(`[DEV ONLY] OTP for ${phone} is ${otp}`);
         return { success: true, message: 'OTP sent' };

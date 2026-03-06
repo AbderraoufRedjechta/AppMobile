@@ -15,8 +15,8 @@ export class AuthService {
   ) { }
 
   async sendOtp(phone: string) {
-    // Generate a 4-digit OTP (hardcoded for easy testing: '1234')
-    const otp = '1234';
+    // Generate a 6-digit OTP (hardcoded for easy testing: '123456')
+    const otp = '123456';
     this.otpStore.set(phone, otp);
     this.logger.log(`[DEV ONLY] OTP for ${phone} is ${otp}`);
     return { success: true, message: 'OTP sent' };

@@ -94,7 +94,7 @@ class _DishDetailsPageState extends State<DishDetailsPage> {
                                 vertical: 8,
                               ),
                               decoration: BoxDecoration(
-                                color: const Color(0xFFFF8C00).withOpacity(0.1),
+                                color: const Color(0xFF933D41).withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Text(
@@ -102,7 +102,7 @@ class _DishDetailsPageState extends State<DishDetailsPage> {
                                 style: const TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
-                                  color: Color(0xFFFF8C00),
+                                  color: Color(0xFF933D41),
                                 ),
                               ),
                             ),
@@ -342,7 +342,7 @@ class _DishDetailsPageState extends State<DishDetailsPage> {
                               content: Text(
                                 '$_quantity x ${widget.dish['name']} ajouté(s) au panier',
                               ),
-                              backgroundColor: const Color(0xFFFF8C00),
+                              backgroundColor: const Color(0xFF933D41),
                               duration: const Duration(seconds: 2),
                               action: SnackBarAction(
                                 label: 'Voir',
@@ -356,7 +356,7 @@ class _DishDetailsPageState extends State<DishDetailsPage> {
                           context.pop();
                         },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFF8C00),
+                    backgroundColor: const Color(0xFF933D41),
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
@@ -394,7 +394,7 @@ class _DishDetailsPageState extends State<DishDetailsPage> {
       ),
       child: Row(
         children: [
-          Icon(icon, color: const Color(0xFFFF8C00)),
+          Icon(icon, color: const Color(0xFF933D41)),
           const SizedBox(width: 16),
           Expanded(
             child: Column(

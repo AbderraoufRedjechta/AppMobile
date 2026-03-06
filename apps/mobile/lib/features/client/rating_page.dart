@@ -49,7 +49,7 @@ class _RatingPageState extends State<RatingPage> {
           'Noter la commande',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: const Color(0xFFFF8C00),
+        backgroundColor: const Color(0xFF933D41),
         foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
@@ -65,7 +65,7 @@ class _RatingPageState extends State<RatingPage> {
                   const Icon(
                     Icons.restaurant,
                     size: 64,
-                    color: Color(0xFFFF8C00),
+                    color: Color(0xFF933D41),
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -111,7 +111,7 @@ class _RatingPageState extends State<RatingPage> {
                         child: Icon(
                           index < _rating ? Icons.star : Icons.star_border,
                           size: 48,
-                          color: const Color(0xFFFF8C00),
+                          color: const Color(0xFF933D41),
                         ),
                       );
                     }),
@@ -167,12 +167,12 @@ class _RatingPageState extends State<RatingPage> {
                             });
                           },
                           selectedColor: const Color(
-                            0xFFFF8C00,
+                            0xFF933D41,
                           ).withOpacity(0.2),
-                          checkmarkColor: const Color(0xFFFF8C00),
+                          checkmarkColor: const Color(0xFF933D41),
                           labelStyle: TextStyle(
                             color: isSelected
-                                ? const Color(0xFFFF8C00)
+                                ? const Color(0xFF933D41)
                                 : Colors.grey[700],
                           ),
                         );
@@ -213,7 +213,7 @@ class _RatingPageState extends State<RatingPage> {
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: const BorderSide(
-                            color: Color(0xFFFF8C00),
+                            color: Color(0xFF933D41),
                             width: 2,
                           ),
                         ),
@@ -244,7 +244,7 @@ class _RatingPageState extends State<RatingPage> {
                 child: ElevatedButton(
                   onPressed: _submitRating,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFF8C00),
+                    backgroundColor: const Color(0xFF933D41),
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
@@ -267,7 +267,7 @@ class _RatingPageState extends State<RatingPage> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Merci pour votre avis! 🌟'),
-        backgroundColor: Color(0xFFFF8C00),
+        backgroundColor: Color(0xFF933D41),
       ),
     );
     Navigator.pop(context);

@@ -76,13 +76,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         Container(
                           padding: const EdgeInsets.all(32),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFFF8C00).withOpacity(0.1),
+                            color: const Color(0xFF933D41).withOpacity(0.1),
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
                             _getIconData(page['icon']!),
                             size: 80,
-                            color: const Color(0xFFFF8C00),
+                            color: const Color(0xFF933D41),
                           ),
                         ).animate().scale(
                           duration: 600.ms,
@@ -135,7 +135,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         width: _currentPage == index ? 24 : 8,
                         decoration: BoxDecoration(
                           color: _currentPage == index
-                              ? const Color(0xFFFF8C00)
+                              ? const Color(0xFF933D41)
                               : Colors.grey[300],
                           borderRadius: BorderRadius.circular(4),
                         ),
@@ -155,7 +155,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFFF8C00),
+                      backgroundColor: const Color(0xFF933D41),
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 32,

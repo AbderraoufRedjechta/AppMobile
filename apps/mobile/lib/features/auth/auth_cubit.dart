@@ -7,6 +7,45 @@ import 'auth_api_service.dart';
 
 enum UserRole { client, cook, courier, admin }
 
+class User extends Equatable {
+  final int id;
+  final String name;
+  final String? avatar;
+  final String phone;
+  final UserRole role;
+
+  const User({
+    required this.id,
+    required this.name,
+    this.avatar,
+    required this.phone,
+    required this.role,
+  });
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      name: json['name'],
+      avatar: json['avatar'],
+      phone: json['phone'],
+      role: UserRole.values.firstWhere((e) => e.name == json['role'], orElse: () => UserRole.client),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'avatar': avatar,
+      'phone': phone,
+      'role': role.name,
+    };
+  }
+
+  @override
+  List<Object?> get props => [id, name, avatar, phone, role];
+}
+
 class AuthState extends Equatable {
   final bool isAuthenticated;
   final User? user;

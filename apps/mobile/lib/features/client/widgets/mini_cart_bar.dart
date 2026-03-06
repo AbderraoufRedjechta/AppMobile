@@ -31,7 +31,7 @@ class MiniCartBar extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFE65100), // Terracotta
+                  color: const Color(0xFF933D41), // Terracotta
                   shape: BoxShape.circle,
                 ),
                 child: Text(

@@ -38,41 +38,7 @@ class DishCard extends StatelessWidget {
                   borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(12),
                   ),
-                  child: (dish['image'] as String).startsWith('http')
-                      ? Image.network(
-                          dish['image'] as String,
-                          height: 160,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Container(
-                              height: 160,
-                              color: Colors.grey[300],
-                              child: const Icon(
-                                Icons.restaurant,
-                                size: 64,
-                                color: Colors.grey,
-                              ),
-                            );
-                          },
-                        )
-                      : Image.asset(
-                          'assets/images/dishes/${dish['image']}',
-                          height: 120,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Container(
-                              height: 160,
-                              color: Colors.grey[300],
-                              child: const Icon(
-                                Icons.restaurant,
-                                size: 64,
-                                color: Colors.grey,
-                              ),
-                            );
-                          },
-                        ),
+                  child: _buildImage(dish['image'] as String?),
                 ),
                 // Badges et bouton favori
                 Positioned(
@@ -127,25 +93,26 @@ class DishCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Nom
+                  // Nom complet
                   Text(
                     dish['name'] as String,
                     style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 15,
                       fontWeight: FontWeight.bold,
+                      color: Colors.black87,
                     ),
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 4),
                   // Description
                   Text(
                     dish['description'] as String,
-                    style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                    style: TextStyle(fontSize: 12, color: Colors.grey[600], height: 1.2),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 8),
+                  const Spacer(),
                   // Prix et stock
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -154,35 +121,43 @@ class DishCard extends StatelessWidget {
                         '${dish['price']} DA',
                         style: const TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFFFF8C00),
+                          fontWeight: FontWeight.w900,
+                          color: Color(0xFF933D41), // Wajabat Primary
                         ),
                       ),
-                      Text(
-                        'Stock: $stock',
-                        style: TextStyle(fontSize: 10, color: Colors.grey[600]),
-                      ),
+                      if (isLowStock && !isOutOfStock)
+                        Text(
+                          'Plus que $stock!',
+                          style: const TextStyle(fontSize: 10, color: Colors.orange, fontWeight: FontWeight.bold),
+                        ),
                     ],
                   ),
-                  const SizedBox(height: 8),
-                  // Bouton Ajouter
+                  const SizedBox(height: 12),
+                  // Bouton Ajouter - Jahez Style (Pill shape)
                   SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton.icon(
+                    child: ElevatedButton(
                       onPressed: isOutOfStock ? null : onAddToCart,
-                      icon: const Icon(Icons.add_shopping_cart, size: 16),
-                      label: Text(
-                        isOutOfStock ? 'Épuisé' : 'Ajouter',
-                        style: const TextStyle(fontSize: 12),
-                      ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFFF8C00),
-                        foregroundColor: Colors.white,
+                        backgroundColor: isOutOfStock ? Colors.grey[300] : const Color(0xFFF8F4E9), // Blanc Chaud
+                        foregroundColor: const Color(0xFF933D41), // Rouge Terre
+                        elevation: 0,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(50),
                         ),
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         minimumSize: const Size(0, 36),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(isOutOfStock ? Icons.block : Icons.add, size: 18),
+                          if (!isOutOfStock) const SizedBox(width: 4),
+                          Text(
+                            isOutOfStock ? 'Épuisé' : 'Ajouter',
+                            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -208,6 +183,54 @@ class DishCard extends StatelessWidget {
           color: Colors.white,
           fontSize: 12,
           fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildImage(String? imagePath) {
+    if (imagePath == null || imagePath.isEmpty) {
+      return Container(
+        height: 160,
+        color: Colors.grey[200],
+        child: const Center(
+          child: Icon(
+            Icons.fastfood,
+            size: 48,
+            color: Colors.grey,
+          ),
+        ),
+      );
+    }
+
+    if (imagePath.startsWith('http')) {
+      return Image.network(
+        imagePath,
+        height: 160,
+        width: double.infinity,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) => _buildPlaceholder(),
+      );
+    }
+
+    return Image.asset(
+      'assets/images/dishes/$imagePath',
+      height: 160,
+      width: double.infinity,
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) => _buildPlaceholder(),
+    );
+  }
+
+  Widget _buildPlaceholder() {
+    return Container(
+      height: 160,
+      color: Colors.grey[200],
+      child: const Center(
+        child: Icon(
+          Icons.fastfood,
+          size: 48,
+          color: Colors.grey,
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'auth_cubit.dart';
+import '../../core/theme/wajabat_theme.dart';
 
 class RoleSelectionPage extends StatelessWidget {
   const RoleSelectionPage({super.key});
@@ -9,27 +10,27 @@ class RoleSelectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: WajabatTheme.background, // Force Wajabat background
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 24),
+              const SizedBox(height: 40),
               Text(
                 'Bienvenue sur Wajabat',
-                style: GoogleFonts.outfit(
+                style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                  color: WajabatTheme.textDark,
                   fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: const Color(0xFF2D3436),
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
               Text(
                 'Choisissez comment vous souhaitez utiliser l\'application',
-                style: GoogleFonts.outfit(
-                  fontSize: 16,
-                  color: Colors.grey[600],
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: WajabatTheme.textLight,
+                  height: 1.4,
                 ),
               ),
               const SizedBox(height: 48),
@@ -42,7 +43,7 @@ class RoleSelectionPage extends StatelessWidget {
                       title: 'Je veux commander',
                       subtitle: 'Découvrez des plats faits maison',
                       icon: Icons.restaurant_menu,
-                      color: const Color(0xFFCC5500), // Burnt Orange
+                      color: WajabatTheme.primary, // Wajabat Rouge Terre
                     ),
                     const SizedBox(height: 16),
                     _buildRoleCard(
@@ -51,7 +52,7 @@ class RoleSelectionPage extends StatelessWidget {
                       title: 'Je suis Cuisinier',
                       subtitle: 'Vendez vos plats et gérez votre menu',
                       icon: Icons.kitchen,
-                      color: const Color(0xFF708238), // Olive Green
+                      color: WajabatTheme.secondary, // Wajabat Jaune Safran
                     ),
                     const SizedBox(height: 16),
                     _buildRoleCard(
@@ -60,7 +61,7 @@ class RoleSelectionPage extends StatelessWidget {
                       title: 'Je suis Livreur',
                       subtitle: 'Livrez des commandes et gagnez de l\'argent',
                       icon: Icons.delivery_dining,
-                      color: const Color(0xFF795548), // Warm Brown
+                      color: const Color(0xFF22C55E), // Wajabat Success Green
                     ),
                   ],
                 ),
@@ -99,20 +100,14 @@ class RoleSelectionPage extends StatelessWidget {
         }
         context.go('/login/$roleParam');
       },
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(24), // Premium rounded
       child: Container(
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: color.withOpacity(0.2)),
-          boxShadow: [
-            BoxShadow(
-              color: color.withOpacity(0.05),
-              blurRadius: 20,
-              offset: const Offset(0, 4),
-            ),
-          ],
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(color: Colors.transparent),
+          boxShadow: WajabatTheme.shadowSmall, // Jahez subtle shadow
         ),
         child: Row(
           children: [
@@ -124,31 +119,30 @@ class RoleSelectionPage extends StatelessWidget {
               ),
               child: Icon(icon, color: color, size: 32),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: 20),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     title,
-                    style: GoogleFonts.outfit(
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: const Color(0xFF2D3436),
+                      color: WajabatTheme.textDark,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     subtitle,
-                    style: GoogleFonts.outfit(
-                      fontSize: 14,
-                      color: Colors.grey[600],
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: WajabatTheme.textLight,
+                      height: 1.3,
                     ),
                   ),
                 ],
               ),
             ),
-            Icon(Icons.chevron_right, color: Colors.grey[400]),
+            Icon(Icons.chevron_right, color: Colors.grey[300], size: 28),
           ],
         ),
       ),

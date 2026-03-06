@@ -30,7 +30,7 @@ class _AddReviewPageState extends State<AddReviewPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Donner un avis'),
-        backgroundColor: const Color(0xFFFF8C00),
+        backgroundColor: const Color(0xFF933D41),
         foregroundColor: Colors.white,
       ),
       body: Padding(
@@ -90,14 +90,14 @@ class _AddReviewPageState extends State<AddReviewPage> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Avis envoyé avec succès !'),
-                            backgroundColor: Color(0xFFFF8C00),
+                            backgroundColor: Color(0xFF933D41),
                           ),
                         );
                         context.pop();
                       }
                     : null,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFFF8C00),
+                  backgroundColor: const Color(0xFF933D41),
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(

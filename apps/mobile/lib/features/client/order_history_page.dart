@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/api_client.dart';
+import '../../core/theme/wajabat_theme.dart';
 import 'orders_api_service.dart';
 
 class OrderHistoryPage extends StatefulWidget {
@@ -85,14 +86,15 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: WajabatTheme.background,
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Mes Commandes',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.titleLarge,
         ),
-        backgroundColor: const Color(0xFFFF8C00),
-        foregroundColor: Colors.white,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -122,11 +124,12 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                   final dateStr = order['createdAt'] ?? order['date'] ?? DateTime.now().toIso8601String();
                   final createdAt = DateTime.parse(dateStr as String);
 
-                  return Card(
+                  return Container(
                     margin: const EdgeInsets.only(bottom: 16),
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: WajabatTheme.shadowSmall,
                     ),
                     child: InkWell(
                       onTap: () {
@@ -236,7 +239,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                   style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
-                                    color: Color(0xFFFF8C00),
+                                    color: Color(0xFF933D41),
                                   ),
                                 ),
                               ],

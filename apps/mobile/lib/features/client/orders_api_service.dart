@@ -8,7 +8,7 @@ class OrdersApiService {
 
   Future<List<Map<String, dynamic>>> getOrders() async {
     try {
-      final response = await _apiClient.dio.get('/orders');
+      final response = await _apiClient.get('/orders');
       if (response.statusCode == 200) {
         return List<Map<String, dynamic>>.from(response.data as List);
       }
@@ -20,7 +20,7 @@ class OrdersApiService {
 
   Future<Map<String, dynamic>> getOrderById(String id) async {
     try {
-      final response = await _apiClient.dio.get('/orders/$id');
+      final response = await _apiClient.get('/orders/$id');
       if (response.statusCode == 200) {
         return response.data as Map<String, dynamic>;
       }
@@ -32,7 +32,7 @@ class OrdersApiService {
 
   Future<void> updateOrderStatus(String id, String status) async {
     try {
-      await _apiClient.dio.post('/orders/$id/status', data: {'status': status});
+      await _apiClient.post('/orders/$id/status', data: {'status': status});
     } on DioException catch (e) {
       throw Exception('Erreur réseau: ${e.message}');
     }
@@ -46,7 +46,7 @@ class OrdersApiService {
     required int total,
   }) async {
     try {
-      final response = await _apiClient.dio.post(
+      final response = await _apiClient.post(
         '/orders',
         data: {
           'clientId': clientId,
@@ -67,7 +67,7 @@ class OrdersApiService {
 
   Future<List<Map<String, dynamic>>> getCookOrders(int cookId) async {
     try {
-      final response = await _apiClient.dio.get('/orders/cook/$cookId');
+      final response = await _apiClient.get('/orders/cook/$cookId');
       if (response.statusCode == 200) {
         return List<Map<String, dynamic>>.from(response.data as List);
       }

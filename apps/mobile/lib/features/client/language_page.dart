@@ -39,7 +39,7 @@ class _LanguagePageState extends State<LanguagePage> {
                 ? 'Langue changée en Français'
                 : 'Language changed to Arabic',
           ),
-          backgroundColor: const Color(0xFFFF8C00),
+          backgroundColor: const Color(0xFF933D41),
         ),
       );
     }
@@ -54,7 +54,7 @@ class _LanguagePageState extends State<LanguagePage> {
           'Langue / اللغة',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: const Color(0xFFFF8C00),
+        backgroundColor: const Color(0xFF933D41),
         foregroundColor: Colors.white,
       ),
       body: ListView(
@@ -82,7 +82,7 @@ class _LanguagePageState extends State<LanguagePage> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
           border: isSelected
-              ? Border.all(color: const Color(0xFFFF8C00), width: 2)
+              ? Border.all(color: const Color(0xFF933D41), width: 2)
               : null,
           boxShadow: [
             BoxShadow(
@@ -102,14 +102,14 @@ class _LanguagePageState extends State<LanguagePage> {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                  color: isSelected ? const Color(0xFFFF8C00) : Colors.black,
+                  color: isSelected ? const Color(0xFF933D41) : Colors.black,
                 ),
               ),
             ),
             if (isSelected)
               const Icon(
                 Icons.check_circle,
-                color: Color(0xFFFF8C00),
+                color: Color(0xFF933D41),
                 size: 28,
               ),
           ],

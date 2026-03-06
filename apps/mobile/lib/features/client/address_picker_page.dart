@@ -75,7 +75,7 @@ class _AddressPickerPageState extends State<AddressPickerPage> {
               padding: EdgeInsets.only(bottom: 40),
               child: Icon(
                 Icons.location_on,
-                color: Color(0xFFFF8C00),
+                color: Color(0xFF933D41),
                 size: 50,
               ),
             ),
@@ -129,7 +129,7 @@ class _AddressPickerPageState extends State<AddressPickerPage> {
                       Expanded(
                         child: _isLoading
                             ? const LinearProgressIndicator(
-                                color: Color(0xFFFF8C00),
+                                color: Color(0xFF933D41),
                                 backgroundColor: Color(0xFFFFF3E0),
                               )
                             : Text(
@@ -155,7 +155,7 @@ class _AddressPickerPageState extends State<AddressPickerPage> {
                               });
                             },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFFF8C00),
+                        backgroundColor: const Color(0xFF933D41),
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(

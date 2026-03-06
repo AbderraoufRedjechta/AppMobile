@@ -30,7 +30,7 @@ class CartPage extends StatelessWidget {
           'Mon Panier',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: const Color(0xFFFF8C00),
+        backgroundColor: const Color(0xFF933D41),
         foregroundColor: Colors.white,
         elevation: 0,
       ),
@@ -78,13 +78,13 @@ class CartPage extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              color: const Color(0xFFFF8C00).withOpacity(0.1),
+              color: const Color(0xFF933D41).withOpacity(0.1),
               shape: BoxShape.circle,
             ),
             child: Icon(
               Icons.shopping_cart_outlined,
               size: 80,
-              color: const Color(0xFFFF8C00).withOpacity(0.5),
+              color: const Color(0xFF933D41).withOpacity(0.5),
             ),
           ),
           const SizedBox(height: 24),
@@ -107,7 +107,7 @@ class CartPage extends StatelessWidget {
             icon: const Icon(Icons.restaurant_menu),
             label: const Text('Voir le menu'),
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFFF8C00),
+              backgroundColor: const Color(0xFF933D41),
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
               shape: RoundedRectangleBorder(
@@ -178,7 +178,7 @@ class CartPage extends StatelessWidget {
                     '${dish['price']} DA',
                     style: const TextStyle(
                       fontSize: 14,
-                      color: Color(0xFFFF8C00),
+                      color: Color(0xFF933D41),
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -401,7 +401,7 @@ class CartPage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                     Text(
                       'Sous-total',
                       style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                     ),
@@ -410,6 +410,7 @@ class CartPage extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
+                        color: Colors.black87,
                       ),
                     ),
                   ],
@@ -436,7 +437,7 @@ class CartPage extends StatelessWidget {
                 ],
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 16),
-                  child: Divider(),
+                  child: Divider(color: Color(0xFFEEEEEE)), // very light divider
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -445,36 +446,37 @@ class CartPage extends StatelessWidget {
                       'Total',
                       style: TextStyle(
                         fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.black87,
                       ),
                     ),
                     Text(
                       '${total.toStringAsFixed(0)} DA',
                       style: const TextStyle(
                         fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFFFF8C00),
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xFF933D41), // Wajabat Rouge Terre
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 24),
+                // Massive Checkout Pill Button
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () => context.push('/checkout'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFFF8C00),
+                      backgroundColor: const Color(0xFF933D41),
                       foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      elevation: 0,
+                      padding: const EdgeInsets.symmetric(vertical: 20), // thick padding 
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(50), // fully rounded pill
                       ),
-                      elevation: 4,
-                      shadowColor: const Color(0xFFFF8C00).withOpacity(0.4),
                     ),
                     child: const Text(
-                      'Commander',
+                      'Valider la commande',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

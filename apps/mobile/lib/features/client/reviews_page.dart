@@ -13,7 +13,7 @@ class ReviewsPage extends StatelessWidget {
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: const Color(0xFFFF8C00),
+        backgroundColor: const Color(0xFF933D41),
         foregroundColor: Colors.white,
       ),
       body: reviews.isEmpty
@@ -91,7 +91,7 @@ class ReviewsPage extends StatelessWidget {
             const SnackBar(content: Text('Fonctionnalité à venir')),
           );
         },
-        backgroundColor: const Color(0xFFFF8C00),
+        backgroundColor: const Color(0xFF933D41),
         icon: const Icon(Icons.add),
         label: const Text('Donner un avis'),
       ),

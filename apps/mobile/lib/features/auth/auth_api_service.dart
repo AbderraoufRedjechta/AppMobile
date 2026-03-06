@@ -21,7 +21,7 @@ class AuthApiService {
     final user = data['user'];
     
     return {
-      'id': user['id'].toString(),
+      'id': user['id'] is String ? int.parse(user['id']) : user['id'],
       'name': user['name'] ?? 'User ${phone.substring(phone.length - 4)}',
       'avatar': user['avatar'] ?? 'https://i.pravatar.cc/150?u=$phone',
       'phone': phone,

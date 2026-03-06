@@ -26,7 +26,7 @@ class _MenuManagementPageState extends State<MenuManagementPage> {
 
   Future<void> _fetchDishes() async {
     try {
-      final cookId = context.read<AuthCubit>().state.user?['id'] ?? 1;
+      final cookId = context.read<AuthCubit>().state.user?.id ?? 1;
       final dishes = await _dishesApiService.getDishesByCook(cookId);
       if (mounted) {
         setState(() {
@@ -119,7 +119,7 @@ class _MenuManagementPageState extends State<MenuManagementPage> {
                             Text(
                               '${dish['price']} DA',
                               style: GoogleFonts.outfit(
-                                color: const Color(0xFFE65100),
+                                color: const Color(0xFF933D41),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

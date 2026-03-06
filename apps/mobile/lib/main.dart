@@ -1,6 +1,18 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 // import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Generated
 import 'core/services/notifications_service.dart';
+import 'core/api_client.dart';
+import 'core/theme_cubit.dart';
+import 'core/theme/wajabat_theme.dart';
+import 'features/auth/auth_api_service.dart';
+import 'features/auth/auth_cubit.dart';
+import 'features/client/cart_cubit.dart';
+import 'features/client/favorites_cubit.dart';
+import 'features/client/promo_cubit.dart';
+import 'core/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

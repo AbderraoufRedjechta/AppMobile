@@ -37,7 +37,7 @@ class _AddressManagementPageState extends State<AddressManagementPage> {
           'Mes Adresses',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: const Color(0xFFFF8C00),
+        backgroundColor: const Color(0xFF933D41),
         foregroundColor: Colors.white,
       ),
       body: _addresses.isEmpty
@@ -57,7 +57,7 @@ class _AddressManagementPageState extends State<AddressManagementPage> {
                     icon: const Icon(Icons.add),
                     label: const Text('Ajouter une adresse'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFFF8C00),
+                      backgroundColor: const Color(0xFF933D41),
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 24,
@@ -95,7 +95,7 @@ class _AddressManagementPageState extends State<AddressManagementPage> {
                                       : address['label'] == 'Travail'
                                       ? Icons.work
                                       : Icons.location_on,
-                                  color: const Color(0xFFFF8C00),
+                                  color: const Color(0xFF933D41),
                                 ),
                                 const SizedBox(width: 8),
                                 Text(
@@ -115,7 +115,7 @@ class _AddressManagementPageState extends State<AddressManagementPage> {
                                 ),
                                 decoration: BoxDecoration(
                                   color: const Color(
-                                    0xFFFF8C00,
+                                    0xFF933D41,
                                   ).withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
@@ -124,7 +124,7 @@ class _AddressManagementPageState extends State<AddressManagementPage> {
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w600,
-                                    color: Color(0xFFFF8C00),
+                                    color: Color(0xFF933D41),
                                   ),
                                 ),
                               ),
@@ -163,9 +163,9 @@ class _AddressManagementPageState extends State<AddressManagementPage> {
                                   icon: const Icon(Icons.check, size: 18),
                                   label: const Text('Définir par défaut'),
                                   style: OutlinedButton.styleFrom(
-                                    foregroundColor: const Color(0xFFFF8C00),
+                                    foregroundColor: const Color(0xFF933D41),
                                     side: const BorderSide(
-                                      color: Color(0xFFFF8C00),
+                                      color: Color(0xFF933D41),
                                     ),
                                   ),
                                 ),
@@ -202,7 +202,7 @@ class _AddressManagementPageState extends State<AddressManagementPage> {
             ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _showAddAddressDialog,
-        backgroundColor: const Color(0xFFFF8C00),
+        backgroundColor: const Color(0xFF933D41),
         foregroundColor: Colors.white,
         icon: const Icon(Icons.add),
         label: const Text('Ajouter'),
@@ -285,7 +285,7 @@ class _AddressManagementPageState extends State<AddressManagementPage> {
               Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFFF8C00),
+              backgroundColor: const Color(0xFF933D41),
               foregroundColor: Colors.white,
             ),
             child: const Text('Enregistrer'),
@@ -348,7 +348,7 @@ class _AddressManagementPageState extends State<AddressManagementPage> {
               Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFFF8C00),
+              backgroundColor: const Color(0xFF933D41),
               foregroundColor: Colors.white,
             ),
             child: const Text('Enregistrer'),

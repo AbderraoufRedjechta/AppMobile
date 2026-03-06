@@ -6,6 +6,7 @@ import 'cart_cubit.dart';
 import 'widgets/dish_card.dart';
 import '../../core/api_client.dart';
 import '../client/dishes_api_service.dart';
+import '../../core/theme/wajabat_theme.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
@@ -44,14 +45,15 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: WajabatTheme.background,
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Mes Favoris',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.titleLarge,
         ),
-        backgroundColor: const Color(0xFFFF8C00),
-        foregroundColor: Colors.white,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
       ),
       body: BlocBuilder<FavoritesCubit, FavoritesState>(
         builder: (context, favState) {
@@ -71,32 +73,24 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   Icon(
                     Icons.favorite_border,
                     size: 100,
-                    color: Colors.grey[400],
+                    color: Colors.grey[300],
                   ),
                   const SizedBox(height: 16),
                   Text(
                     'Aucun favori pour le moment',
-                    style: TextStyle(fontSize: 20, color: Colors.grey[600]),
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(color: WajabatTheme.textDark),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     'Ajoutez des plats à vos favoris\npour les retrouver facilement',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 14, color: Colors.grey[500]),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: WajabatTheme.textLight),
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 32),
                   ElevatedButton.icon(
                     onPressed: () => context.go('/'),
                     icon: const Icon(Icons.restaurant_menu),
-                    label: const Text('Découvrir les plats'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFFF8C00),
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 12,
-                      ),
-                    ),
+                    label: const Text('Découvrir les plats'), // Uses WajabatTheme elevatedButton style automatically
                   ),
                 ],
               ),
@@ -131,7 +125,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
                     SnackBar(
                       content: Text('${dish['name']} ajouté au panier'),
                       duration: const Duration(seconds: 1),
-                      backgroundColor: const Color(0xFFFF8C00),
+                      backgroundColor: WajabatTheme.primary,
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     ),
                   );
                 },

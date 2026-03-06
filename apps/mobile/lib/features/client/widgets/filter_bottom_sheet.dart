@@ -94,7 +94,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
             max: 1000,
             divisions: 20,
             label: _maxPrice == null ? 'Tous' : '$_maxPrice DA',
-            activeColor: const Color(0xFFFF8C00),
+            activeColor: const Color(0xFF933D41),
             onChanged: (value) {
               setState(() {
                 _maxPrice = value.toInt();
@@ -110,7 +110,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
           CheckboxListTile(
             title: const Text('Afficher uniquement les plats disponibles'),
             value: _showOnlyAvailable,
-            activeColor: const Color(0xFFFF8C00),
+            activeColor: const Color(0xFF933D41),
             onChanged: (value) {
               setState(() {
                 _showOnlyAvailable = value ?? false;
@@ -152,7 +152,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFF8C00),
+                    backgroundColor: const Color(0xFF933D41),
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
@@ -177,7 +177,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
           Icon(
             icon,
             size: 20,
-            color: isSelected ? const Color(0xFFFF8C00) : Colors.grey,
+            color: isSelected ? const Color(0xFF933D41) : Colors.grey,
           ),
           const SizedBox(width: 12),
           Text(label),
@@ -185,7 +185,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
       ),
       value: option,
       groupValue: _selectedSort,
-      activeColor: const Color(0xFFFF8C00),
+      activeColor: const Color(0xFF933D41),
       onChanged: (value) {
         setState(() {
           _selectedSort = value!;

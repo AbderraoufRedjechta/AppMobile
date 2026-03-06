@@ -9,7 +9,7 @@ class HelpSupportPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Aide et Support'),
-        backgroundColor: const Color(0xFFFF8C00),
+        backgroundColor: const Color(0xFF933D41),
         foregroundColor: Colors.white,
       ),
       body: ListView(
@@ -62,10 +62,10 @@ class HelpSupportPage extends StatelessWidget {
   Widget _buildHeader() {
     return Container(
       padding: const EdgeInsets.all(24),
-      color: const Color(0xFFFF8C00).withOpacity(0.1),
+      color: const Color(0xFF933D41).withOpacity(0.1),
       child: Column(
         children: [
-          const Icon(Icons.support_agent, size: 64, color: Color(0xFFFF8C00)),
+          const Icon(Icons.support_agent, size: 64, color: Color(0xFF933D41)),
           const SizedBox(height: 16),
           const Text(
             'Comment pouvons-nous vous aider ?',
@@ -91,7 +91,7 @@ class HelpSupportPage extends StatelessWidget {
         style: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
-          color: Color(0xFFFF8C00),
+          color: Color(0xFF933D41),
         ),
       ),
     );
@@ -122,10 +122,10 @@ class HelpSupportPage extends StatelessWidget {
       leading: Container(
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: const Color(0xFFFF8C00).withOpacity(0.1),
+          color: const Color(0xFF933D41).withOpacity(0.1),
           shape: BoxShape.circle,
         ),
-        child: Icon(icon, color: const Color(0xFFFF8C00)),
+        child: Icon(icon, color: const Color(0xFF933D41)),
       ),
       title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
       subtitle: Text(subtitle),

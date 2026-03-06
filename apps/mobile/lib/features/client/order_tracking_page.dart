@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'dart:async';
 import '../../core/api_client.dart';
+import '../../core/theme/wajabat_theme.dart';
 import 'orders_api_service.dart';
 
 class OrderTrackingPage extends StatefulWidget {
@@ -63,10 +64,15 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
     final destinationLocation = LatLng(36.7528, 3.0425); // Nearby
 
     return Scaffold(
+      backgroundColor: WajabatTheme.background,
       appBar: AppBar(
-        title: Text('Commande #${_currentOrder['id']}'),
-        backgroundColor: const Color(0xFFFF8C00),
-        foregroundColor: Colors.white,
+        title: Text(
+          'Commande #${_currentOrder['id']}',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
       ),
       body: Column(
         children: [
@@ -90,7 +96,7 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
                       Polyline(
                         points: [courierLocation, destinationLocation],
                         strokeWidth: 4.0,
-                        color: const Color(0xFFFF8C00),
+                        color: WajabatTheme.primary,
                       ),
                     ],
                   ),
@@ -108,9 +114,9 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
                               BoxShadow(color: Colors.black26, blurRadius: 4),
                             ],
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.delivery_dining,
-                            color: Color(0xFFFF8C00),
+                            color: WajabatTheme.primary,
                             size: 24,
                           ),
                         ),
@@ -139,9 +145,9 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(24),
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFFF8C00),
-                      borderRadius: BorderRadius.vertical(
+                    decoration: BoxDecoration(
+                      color: WajabatTheme.primary,
+                      borderRadius: const BorderRadius.vertical(
                         bottom: Radius.circular(24),
                       ),
                     ),
@@ -293,10 +299,10 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
                             ),
                             Text(
                               '${_currentOrder['totalAmount'] ?? _currentOrder['total'] ?? 0} DA',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xFFFF8C00),
+                                color: WajabatTheme.primary,
                               ),
                             ),
                           ],
@@ -329,13 +335,14 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
                               icon: const Icon(Icons.chat_bubble_outline),
                               label: const Text('Contacter le livreur'),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFFFF8C00),
+                                backgroundColor: WajabatTheme.primary,
                                 foregroundColor: Colors.white,
+                                elevation: 0,
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 16,
                                 ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
                             ),
@@ -357,13 +364,14 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
                               icon: const Icon(Icons.restaurant),
                               label: const Text('Contacter le cuisinier'),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFFFF8C00),
+                                backgroundColor: WajabatTheme.primary,
                                 foregroundColor: Colors.white,
+                                elevation: 0,
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 16,
                                 ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
                             ),
@@ -389,11 +397,12 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
                               icon: const Icon(Icons.restaurant),
                               label: const Text('Contacter le cuisinier'),
                               style: OutlinedButton.styleFrom(
+                                foregroundColor: WajabatTheme.primary,
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 16,
                                 ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
                             ),
@@ -412,13 +421,14 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
                               icon: const Icon(Icons.star),
                               label: const Text('Noter cette commande'),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFFFF8C00),
+                                backgroundColor: WajabatTheme.primary,
                                 foregroundColor: Colors.white,
+                                elevation: 0,
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 16,
                                 ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
                             ),
@@ -454,7 +464,7 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: isCompleted ? const Color(0xFFFF8C00) : Colors.grey[300],
+                color: isCompleted ? WajabatTheme.primary : Colors.grey[300],
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -467,7 +477,7 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
               Container(
                 width: 2,
                 height: 60,
-                color: isCompleted ? const Color(0xFFFF8C00) : Colors.grey[300],
+                color: isCompleted ? WajabatTheme.primary : Colors.grey[300],
               ),
           ],
         ),

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -75,7 +76,7 @@ class _CookHomeTabState extends State<_CookHomeTab> {
 
   Future<void> _fetchDashboardData() async {
     try {
-      final cookId = context.read<AuthCubit>().state.user?['id'] ?? 1;
+      final cookId = context.read<AuthCubit>().state.user?.id ?? 1;
       final orders = await _ordersApiService.getCookOrders(cookId);
       if (mounted) {
         setState(() {

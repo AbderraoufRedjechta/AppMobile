@@ -9,7 +9,7 @@ class DiscoverPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final categories = [
-      {'name': 'Traditionnel', 'icon': '🍲', 'color': Color(0xFFE65100)},
+      {'name': 'Traditionnel', 'icon': '🍲', 'color': Color(0xFF933D41)},
       {'name': 'Street Food', 'icon': '🌯', 'color': Color(0xFF2E7D32)},
       {'name': 'Sucré', 'icon': '🧁', 'color': Color(0xFFC2185B)},
       {'name': 'Healthy', 'icon': '🥗', 'color': Color(0xFF1565C0)},
@@ -105,7 +105,7 @@ class DiscoverPage extends StatelessWidget {
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [Color(0xFFFF8C00), Color(0xFFFFB74D)],
+                    colors: [Color(0xFF933D41), Color(0xFFFFB74D)],
                   ),
                   borderRadius: BorderRadius.circular(24),
                 ),

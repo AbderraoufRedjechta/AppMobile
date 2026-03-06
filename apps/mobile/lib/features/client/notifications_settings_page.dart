@@ -19,7 +19,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Notifications'),
-        backgroundColor: const Color(0xFFFF8C00),
+        backgroundColor: const Color(0xFF933D41),
         foregroundColor: Colors.white,
       ),
       body: ListView(
@@ -66,7 +66,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage> {
         style: TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.bold,
-          color: const Color(0xFFFF8C00),
+          color: const Color(0xFF933D41),
           letterSpacing: 1.0,
         ),
       ),
@@ -84,7 +84,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage> {
       subtitle: Text(subtitle, style: TextStyle(color: Colors.grey[600])),
       value: value,
       onChanged: onChanged,
-      activeThumbColor: const Color(0xFFFF8C00),
+      activeThumbColor: const Color(0xFF933D41),
     );
   }
 }
